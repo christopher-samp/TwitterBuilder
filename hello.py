@@ -1,9 +1,13 @@
-from flask import Flask
+from flask import Flask, jsonify
+from flask_cors import CORS
+import json
+
 import tweepy
 
 #auth = ""
 #api = ""
 app = Flask(__name__)
+CORS(app)
 @app.route('/')
 def hello_world():
     get_auth_api()
@@ -56,7 +60,14 @@ def recent_searches():
     #print(client.get_tweet(1462814411970723844, user_auth=True))
     #print(api.get_saved_searches())
     #print(len(api.get_saved_searches()))
+    theTweet = client.get_tweet(1462814411970723844, user_auth=True).data
     
-    return client.get_tweet(1462814411970723844, user_auth=True).data.text
+    tweet = {
+        "data": theTweet.text,
+        "id": theTweet.id
+    }
+    tweetlist = [tweet]
+
+    return jsonify(tweetlist)
     
     
