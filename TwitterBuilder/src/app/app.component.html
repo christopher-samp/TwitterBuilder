@@ -1,10 +1,10 @@
-<div style="text-align:center">
-  <h1>Tweets</h1>
-</div>
-<h2>Here are the tweets created so far: </h2>
-<ul>
-  <li *ngFor="let tweet of TweetList">
-    {{tweet.data}},
-    {{tweet.id}}
-  </li>
-</ul>
+<h1>Angular Router App</h1>
+<!-- This nav gives you links to click, which tells the router which route to use (defined in the routes constant in  AppRoutingModule) -->
+<nav>
+  <ul>
+    <li><a routerLink="/Tweets" routerLinkActive="active">Tweets</a></li>
+    <li><a routerLink="/Users" routerLinkActive="active">Users</a></li>
+  </ul>
+</nav>
+<!-- The routed views render in the <router-outlet>-->
+<router-outlet></router-outlet>

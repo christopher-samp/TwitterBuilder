@@ -2,6 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { TweetsApiService } from './Tweet/Tweet-api.service';
 import { Tweet } from './Tweet/Tweet.model';
+import { UsersApiService } from './User/User-api.service'
+import { User } from './User/User.model'
 
 @Component({
   selector: 'app-root',
@@ -9,26 +11,11 @@ import { Tweet } from './Tweet/Tweet.model';
   styleUrls: ['./app.component.sass']
 })
 export class AppComponent implements OnInit, OnDestroy {
-  title = 'TwitterBuilder';
-  TweetListSubs: Subscription;
-  TweetList: Tweet[];
-
-  constructor(private tweetsApi: TweetsApiService) {
-    console.log("app component constructor")
+  ngOnInit(): void {
+    throw new Error("Method not implemented.");
+  }  ngOnDestroy(): void {
+    throw new Error("Method not implemented.");
   }
 
-  ngOnInit() {
-    console.log("init NG")
-    this.TweetListSubs = this.tweetsApi
-      .getTweets()
-      .subscribe(res => {
-        this.TweetList = res;
-      },
-        console.error
-      );
-  }
-
-  ngOnDestroy() {
-    this.TweetListSubs.unsubscribe();
-  }
+  
 }

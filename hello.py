@@ -41,16 +41,16 @@ def get_auth_api():
     
 @app.route('/recent')
 def recent_searches():
-    consumer_key = ""
-    consumer_secret = ""
+    consumer_key = "niFrGMblGwSn7TzYPntdFqeEr"
+    consumer_secret = "T8d4UU9vahI4oUzVUX9Cxh2srs4axKXEZ6rbr0QvwPpOFfL52g"
 
     # Your account's (the app owner's account's) access token and secret for your
     # app can be found under the Authentication Tokens section of the
     # Keys and Tokens tab of your app, under the
     # Twitter Developer Portal Projects & Apps page at
     # https://developer.twitter.com/en/portal/projects-and-apps
-    access_token = ""
-    access_token_secret = ""
+    access_token = "369867339-8drZ7FPKl8BdZjgJdlnj07x82r5SWz4derBVfN8S"
+    access_token_secret = "bj3lqGkWCDABRMVA2LewMLvmd1K3YLPgcfNTUBMQ1FhMP"
 
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_token, access_token_secret)
@@ -69,5 +69,40 @@ def recent_searches():
     tweetlist = [tweet]
 
     return jsonify(tweetlist)
+    
+@app.route('/GetUserById')
+def get_user_by_id():
+    consumer_key = "niFrGMblGwSn7TzYPntdFqeEr"
+    consumer_secret = "T8d4UU9vahI4oUzVUX9Cxh2srs4axKXEZ6rbr0QvwPpOFfL52g"
+
+    # Your account's (the app owner's account's) access token and secret for your
+    # app can be found under the Authentication Tokens section of the
+    # Keys and Tokens tab of your app, under the
+    # Twitter Developer Portal Projects & Apps page at
+    # https://developer.twitter.com/en/portal/projects-and-apps
+    access_token = "369867339-8drZ7FPKl8BdZjgJdlnj07x82r5SWz4derBVfN8S"
+    access_token_secret = "bj3lqGkWCDABRMVA2LewMLvmd1K3YLPgcfNTUBMQ1FhMP"
+
+    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+    auth.set_access_token(access_token, access_token_secret)
+
+    api = tweepy.API(auth)
+    # client = tweepy.Client(auth, consumer_key, consumer_secret, access_token, access_token_secret)
+
+    fullUser = api.get_user(id=369867339,user_auth=True, user_fields=['profile_image_url','public_metrics'])._json
+    print(fullUser)
+    # return "asdf"
+    user = {
+        "name": fullUser['name'],
+        "id": fullUser['id'],
+        "screen_name": fullUser['screen_name'],
+        "followers_count": fullUser['followers_count'],
+        "friends_count": fullUser['friends_count'],
+        "statuses_count": fullUser['statuses_count'],
+        "profile_image_url_https": fullUser['profile_image_url']
+    }
+    userList = [user]
+
+    return jsonify(userList)
     
     
