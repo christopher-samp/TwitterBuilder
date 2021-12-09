@@ -18,7 +18,7 @@ export class TweetsApiService {
   // GET list of public, future events
   getTweets(): Observable<Tweet[]> {
     console.log("getting tweets")
-    return this.http.get<Tweet[]>(`http://127.0.0.1:5000/recent`).pipe(catchError(this._handleError));
+    return this.http.get<Tweet[]>(`http://127.0.0.1:5000/GetTweets`).pipe(catchError(this._handleError));
   }
 }
 

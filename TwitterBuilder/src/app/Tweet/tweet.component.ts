@@ -9,7 +9,8 @@ import { Tweet } from './Tweet.model';
 export class TweetsComponent implements OnInit, OnDestroy {
   title = 'TwitterBuilder';
   TweetListSubs: Subscription;
-  TweetList: Tweet[];
+  TweetListLeft: Tweet[];
+  TweetListRight: Tweet[];
 
   constructor(private tweetsApi: TweetsApiService) {
     console.log("app component constructor")
@@ -20,7 +21,9 @@ export class TweetsComponent implements OnInit, OnDestroy {
     this.TweetListSubs = this.tweetsApi
       .getTweets()
       .subscribe(res => {
-        this.TweetList = res;
+        this.TweetListLeft = res.slice(0,res.length/2);
+        this.TweetListRight = res.slice(res.length / 2, res.length);
+        console.log(res);
       },
         console.error
       );

@@ -129,16 +129,22 @@ def get_tweets():
     client = tweepy.Client(auth, consumer_key, consumer_secret, access_token, access_token_secret)
 
     TweetList = []
-    for status in tweepy.Cursor(api.search_tweets, "Tweepy",
-                            count=100).items(1):
-        print(status._json['text'])
+    for status in tweepy.Cursor(api.search_tweets, "Web3", tweet_mode = "extended", lang="en",
+                            count=100).items(10):
+        print(status._json)
+        
+        favoriteCount=0
+        if "retweeted_status" in status._json:
+            favoriteCount = status._json['retweeted_status']['favorite_count']
+            
         tweet = {
-            "data": status._json['text'],
-            "id": status._json['id'],
+            "data": status._json['full_text'],
+            "id": str(status._json['id']),
             "retweets": status._json['retweet_count'],
-            "favorites": status._json['favorite_count'],
+            "favorites": favoriteCount,
             "date": status._json['created_at'],
-            "profile_image_url_https": status._json['user']['profile_image_url_https']
+            "profile_image_url_https": status._json['user']['profile_image_url_https'],
+            "username": status._json['user']['screen_name']
         }
         TweetList.append(tweet)
         
