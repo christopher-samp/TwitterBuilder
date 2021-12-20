@@ -7,18 +7,16 @@
 
 <body>
 
-<!-- This nav gives you links to click, which tells the router which route to use (defined in the routes constant in  AppRoutingModule) -->
-<div class="container">
-<div class="jumbotron">
-  <h1>Angular Router App</h1>
-<nav>
-  <ul>
-    <li><a routerLink="/Tweets" routerLinkActive="active">Tweets</a></li>
-    <li><a routerLink="/Users" routerLinkActive="active">Users</a></li>
-  </ul>
+<!-- This nav gives you links to click, which tells the router which route to use (defined in the routes constant in  AppRoutingModule)
+
+-->
+<nav class="navbar navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">Social-Growth.io</a>
+  <div style="margin:auto">
+    <a class="navbar-brand" routerLink="/Tweets" routerLinkActive="active">Tweets</a>
+    <a class="navbar-brand" outerLink="/Users" routerLinkActive="active">Users</a>
+  </div>
 </nav>
-</div>
-</div>
 
 <!-- The routed views render in the <router-outlet>-->
 <router-outlet></router-outlet>

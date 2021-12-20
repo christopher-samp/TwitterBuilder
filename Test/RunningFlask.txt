@@ -1,0 +1,5 @@
+How to run flask:
+
+. test/bin/activate
+export FLASK_APP=hello.py
+flask runn 

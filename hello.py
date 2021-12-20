@@ -109,8 +109,8 @@ def get_user_by_id():
 
     return jsonify(userList)
 
-@app.route('/GetTweets')
-def get_tweets():
+@app.route('/GetTweets/<keyword>')
+def get_tweets(keyword):
     consumer_key = "niFrGMblGwSn7TzYPntdFqeEr"
     consumer_secret = "T8d4UU9vahI4oUzVUX9Cxh2srs4axKXEZ6rbr0QvwPpOFfL52g"
 
@@ -129,7 +129,7 @@ def get_tweets():
     client = tweepy.Client(auth, consumer_key, consumer_secret, access_token, access_token_secret)
 
     TweetList = []
-    for status in tweepy.Cursor(api.search_tweets, "Web3", tweet_mode = "extended", lang="en",
+    for status in tweepy.Cursor(api.search_tweets, keyword, tweet_mode = "extended", lang="en",
                             count=100).items(10):
         print(status._json)
         

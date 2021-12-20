@@ -6,10 +6,12 @@ import { UsersComponent } from './User/user.component';
 const routes: Routes = [
   { path: 'Tweets', component: TweetsComponent },
   { path: 'Users', component: UsersComponent },
+  { path: 'Tweets/:searchTerm', component: TweetsComponent},
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [
+    RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
