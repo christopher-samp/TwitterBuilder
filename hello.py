@@ -1,6 +1,7 @@
 from flask import Flask, jsonify
 from flask_cors import CORS
 import json
+from datetime import datetime,timedelta
 
 import tweepy
 
@@ -94,8 +95,7 @@ def get_user_by_id():
     # client = tweepy.Client(auth, consumer_key, consumer_secret, access_token, access_token_secret)
 
     fullUser = api.get_user(id=369867339,user_auth=True, user_fields=['profile_image_url','public_metrics'])._json
-    print(fullUser)
-    # return "asdf"
+    
     user = {
         "name": fullUser['name'],
         "id": fullUser['id'],
@@ -111,6 +111,9 @@ def get_user_by_id():
 
 @app.route('/GetTweets/<keyword>')
 def get_tweets(keyword):
+    return get_tweets_helper(keyword, "popular", 10)
+
+def get_tweets_helper(keyword, resultType, numTweets):
     consumer_key = "niFrGMblGwSn7TzYPntdFqeEr"
     consumer_secret = "T8d4UU9vahI4oUzVUX9Cxh2srs4axKXEZ6rbr0QvwPpOFfL52g"
 
@@ -129,13 +132,16 @@ def get_tweets(keyword):
     client = tweepy.Client(auth, consumer_key, consumer_secret, access_token, access_token_secret)
 
     TweetList = []
-    for status in tweepy.Cursor(api.search_tweets, keyword, tweet_mode = "extended", lang="en",
-                            count=100).items(10):
+    for status in tweepy.Cursor(api.search_tweets, keyword, tweet_mode = "extended", lang="en", result_type=resultType,
+                            count=100).items(numTweets):
         print(status._json)
         
-        favoriteCount=0
+        favoriteCount=status._json['favorite_count']
+        retweetCount=status._json['retweet_count']
+
         if "retweeted_status" in status._json:
             favoriteCount = status._json['retweeted_status']['favorite_count']
+            retweetCount = status._json['retweeted_status']['retweet_count']
             
         tweet = {
             "data": status._json['full_text'],
@@ -144,10 +150,77 @@ def get_tweets(keyword):
             "favorites": favoriteCount,
             "date": status._json['created_at'],
             "profile_image_url_https": status._json['user']['profile_image_url_https'],
-            "username": status._json['user']['screen_name']
+            "username": status._json['user']['screen_name'],
+            "userid": status._json['user']['id']
         }
         TweetList.append(tweet)
         
     return jsonify(TweetList)
+
+@app.route('/NicheUsers/<keyword>')
+def get_users_in_niche(keyword):
+    consumer_key = "niFrGMblGwSn7TzYPntdFqeEr"
+    consumer_secret = "T8d4UU9vahI4oUzVUX9Cxh2srs4axKXEZ6rbr0QvwPpOFfL52g"
+
+    # Your account's (the app owner's account's) access token and secret for your
+    # app can be found under the Authentication Tokens section of the
+    # Keys and Tokens tab of your app, under the
+    # Twitter Developer Portal Projects & Apps page at
+    # https://developer.twitter.com/en/portal/projects-and-apps
+    access_token = "369867339-8drZ7FPKl8BdZjgJdlnj07x82r5SWz4derBVfN8S"
+    access_token_secret = "bj3lqGkWCDABRMVA2LewMLvmd1K3YLPgcfNTUBMQ1FhMP"
+
+    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+    auth.set_access_token(access_token, access_token_secret)
+
+    api = tweepy.API(auth)
+    client = tweepy.Client(auth, consumer_key, consumer_secret, access_token, access_token_secret)
+
+    contextUser = json.loads(get_user_by_id().get_data())
+    contextUserFollowers = contextUser[0]['followers_count']
+
+    UserList = []
+    while(len(UserList) < 10):
+        for user in tweepy.Cursor(api.search_users, keyword,
+                                count=50).items(50):
+            searchedUserFollowerCount = user._json['followers_count']
+            if(searchedUserFollowerCount > contextUserFollowers and
+               searchedUserFollowerCount < 10*contextUserFollowers):
+                userid = user._json['id']
+                username = user._json['name']
+                usernameAt = user._json['screen_name']
+                lastTweetTime = user._json['status']['created_at']
+                description = user._json['description']
+
+                if validate_users_activity(userid, usernameAt.lower(), username.lower(), description.lower(), keyword.lower(), lastTweetTime) == False:
+                    continue
+                    
+                userObject = {
+                    "userid": userid,
+                    "username": username,
+                    "usernameAt": usernameAt,
+                    "description" : description,
+                    "followers": searchedUserFollowerCount,
+                    "following": user._json['friends_count'],
+                }
+                UserList.append(userObject)
+                
+    return jsonify(UserList)
+
+def validate_users_activity(userid, screenName, name, description, keyword, lastTweetTime):
+    if keyword not in description and keyword not in screenName and keyword not in name:
+        return False
+
+    lastTweetTimeFormated = datetime.strftime(datetime.strptime(lastTweetTime,'%a %b %d %H:%M:%S +0000 %Y'), '%Y-%m-%d %H:%M:%S')
+    lastTweetDateTime = datetime.strptime(lastTweetTimeFormated, '%Y-%m-%d %H:%M:%S')
+    sevenDaysAgo = datetime.now() - timedelta(days=7)
+    if(lastTweetDateTime < sevenDaysAgo):
+        return False
+
+    return True
+
+
+
+
     
     
