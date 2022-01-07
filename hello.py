@@ -194,7 +194,7 @@ def get_users_in_niche(keyword):
 
                 if validate_users_activity(userid, usernameAt.lower(), username.lower(), description.lower(), keyword.lower(), lastTweetTime) == False:
                     continue
-                    
+
                 userObject = {
                     "userid": userid,
                     "username": username,
@@ -202,6 +202,8 @@ def get_users_in_niche(keyword):
                     "description" : description,
                     "followers": searchedUserFollowerCount,
                     "following": user._json['friends_count'],
+                    "profile_image_url_https": user._json['profile_image_url_https'],
+                    "statuses_count": user._json['statuses_count']
                 }
                 UserList.append(userObject)
                 

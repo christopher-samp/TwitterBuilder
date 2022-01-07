@@ -1,9 +1,16 @@
 <div style="text-align:center">
-  <h1>Users</h1>
+  <app-search></app-search>
 </div>
 <h2>Here is the current user:</h2>
 <ul>
   <li *ngFor="let user of UserList">
-    {{user.friends_count}}
+    <!-- {{user.username}}
+    {{user.userid}}
+    {{user.usernameAt}}
+    {{user.following}}
+    {{user.statuses_count}}
+    {{user.followers}} -->
+    {{user.profile_image_url_https}}
+    <!-- {{user.description}} -->
   </li>
 </ul>

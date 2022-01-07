@@ -1,11 +1,12 @@
 export class User {
   constructor(
-    public name: string,
-    public id: number,
-    public screen_name: string,
-    public followers_count: number,
-    public friends_count: number,
+    public username: string,
+    public userid: number,
+    public usernameAt: string,
+    public followers: number,
+    public following: number,
     public statuses_count: number,
-    public profile_image_url_https: string
+    public profile_image_url_https: string,
+    public description: string
   ) { }
 }

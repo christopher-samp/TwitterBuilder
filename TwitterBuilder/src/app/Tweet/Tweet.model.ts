@@ -6,6 +6,7 @@ export class Tweet {
     public favorites: number,
     public date: string,
     public profile_image_url_https: string,
-    public username: string
+    public username: string,
+    public userid: number
   ) { }
 }

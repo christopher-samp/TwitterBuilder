@@ -22,8 +22,10 @@ export class SearchComponent implements OnInit {
 
   search(): void {
     console.log(this.searchTerm)
+    console.log(location.pathname);
+    var baseUrl = location.pathname.split("/")[1];
     if (this.searchTerm)
-      this.router.navigate(['/', 'Tweets', this.searchTerm]);
+      this.router.navigate(['/', baseUrl, this.searchTerm]);
     else
       this.searchTerm=""
       // this.router.navigateByUrl("/Tweets/" + this.searchTerm);

@@ -16,9 +16,9 @@ export class UsersApiService {
   }
 
   // GET list of public, future events
-  getUsers(): Observable<User[]> {
+  getUsers(searchTerm: string): Observable<User[]> {
     console.log("getting Users")
-    return this.http.get<User[]>(`http://127.0.0.1:5000/GetUserById`).pipe(catchError(this._handleError));
+    return this.http.get<User[]>(`http://127.0.0.1:5000/NicheUsers/${searchTerm}`).pipe(catchError(this._handleError));
   }
 }
 
