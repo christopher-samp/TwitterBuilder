@@ -10,7 +10,8 @@
     <div class=""
       style="box-sizing: border-box; background-clip: padding-box; width: 50%; border-width: 0px 0px 0px 16px; border-style: solid; border-color: transparent; border-image: initial;">
       <div data-v-6675b3bd="">
-        <div data-v-6675b3bd="" class="flex flex-col bg-block rounded-lg pt-4 space-y-2 mb-4" *ngFor="let tweet of TweetListLeft">
+
+        <div data-v-6675b3bd="" class="shadow-lg flex flex-col bg-block rounded-lg pt-4 space-y-2 mb-4" *ngFor="let tweet of TweetListLeft">
           <div data-v-6675b3bd="" class="px-4 flex-grow space-y-2">
             <div data-v-6675b3bd="" class="flex justify-between text-muted">
               <div data-v-6675b3bd="" class="flex space-x-2"><img data-v-6675b3bd="" alt="username's profile picture"
@@ -28,7 +29,7 @@
           </div>
           <hr data-v-6675b3bd="">
           <div data-v-6675b3bd="" class="flex justify-between px-4 pb-2">
-            <div data-v-6675b3bd="" class="flex space-x-2 text-sm text-muted"><span data-v-6675b3bd=""
+            <div data-v-6675b3bd="" class="flex mb-2 space-x-2 text-sm text-muted"><span data-v-6675b3bd=""
                 class="flex space-x-1 items-center"><svg data-v-6675b3bd="" viewBox="0 0 24 24" height="24" width="24"
                   xmlns="http://www.w3.org/2000/svg" class="p-1">
                   <path xmlns="http://www.w3.org/2000/svg" fill="currentColor"
@@ -47,7 +48,7 @@
                 <a target="_blank" href="https://twitter.com/{{tweet.username}}/status/{{tweet.id}}"
                   style="float: right;">
                 <button data-v-6675b3bd=""
-              class="btn text small primary">
+              class="btn text small primary btn-sm">
               View On Twitter
             </button>
           </a>
@@ -59,7 +60,7 @@
     <div class=""
       style="box-sizing: border-box; background-clip: padding-box; width: 50%; border-width: 0px 0px 0px 16px; border-style: solid; border-color: transparent; border-image: initial;">
     <div data-v-6675b3bd="">
-      <div data-v-6675b3bd="" class="flex flex-col bg-block rounded-lg pt-4 space-y-2 mb-4" *ngFor="let tweet of TweetListRight">
+      <div data-v-6675b3bd="" class="shadow-lg flex flex-col bg-block rounded-lg pt-4 space-y-2 mb-4" *ngFor="let tweet of TweetListRight">
         <div data-v-6675b3bd="" class="px-4 flex-grow space-y-2">
           <div data-v-6675b3bd="" class="flex justify-between text-muted">
             <div data-v-6675b3bd="" class="flex space-x-2"><img data-v-6675b3bd="" alt="users's profile picture"
@@ -78,7 +79,7 @@
         </div>
         <hr data-v-6675b3bd="">
         <div data-v-6675b3bd="" class="flex justify-between px-4 pb-2">
-          <div data-v-6675b3bd="" class="flex space-x-2 text-sm text-muted"><span data-v-6675b3bd=""
+          <div data-v-6675b3bd="" class="flex space-x-2 mb-2 text-sm text-muted"><span data-v-6675b3bd=""
               class="flex space-x-1 items-center"><svg data-v-6675b3bd="" viewBox="0 0 24 24" height="24" width="24"
                 xmlns="http://www.w3.org/2000/svg" class="p-1">
                 <path xmlns="http://www.w3.org/2000/svg" fill="currentColor"
@@ -95,9 +96,9 @@
                 </g>
               </svg><span data-v-6675b3bd="">{{tweet.favorites}}</span></span>
               <a target="_blank" href="https://twitter.com/{{tweet.username}}/status/{{tweet.id}}"
-                style="float: right;">
+                style="float: right; padding-bottom: 5%">
               <button data-v-6675b3bd=""
-            class="btn text small primary" >
+            class="btn text small primary btn-sm" >
             View On Twitter
           </button>
           </a>
