@@ -1,16 +1,101 @@
-<div style="text-align:center">
+<!-- <div style="text-align:center">
   <app-search></app-search>
 </div>
 <h2>Here is the current user:</h2>
 <ul>
   <li *ngFor="let user of UserList">
-    <!-- {{user.username}}
+    {{user.username}}
     {{user.userid}}
     {{user.usernameAt}}
     {{user.following}}
     {{user.statuses_count}}
-    {{user.followers}} -->
+    {{user.followers}}
     {{user.profile_image_url_https}}
-    <!-- {{user.description}} -->
+    {{user.description}}
   </li>
-</ul>
+</ul> -->
+
+<div style="text-align:center">
+  <app-search></app-search>
+</div>
+<div data-v-6675b3bd="" class="relative">
+  <div data-v-6675b3bd="" class="categories-shadow top -mb-8"></div>
+  <div data-v-6675b3bd="" class="categories-shadow bottom"></div>
+  <div data-v-6675b3bd="" class="tweets-grid flex-wrap overflow-y-auto py-4 scrollbar-inner"
+    style="display: flex; margin-left: -16px;">
+    <div class=""
+      style="box-sizing: border-box; background-clip: padding-box; width: 50%; border-width: 0px 0px 0px 16px; border-style: solid; border-color: transparent; border-image: initial;">
+      <div data-v-6675b3bd="">
+
+        <div data-v-6675b3bd="" class="shadow-lg flex flex-col bg-block rounded-lg pt-4 space-y-2 mb-4"
+          *ngFor="let user of UserListLeft">
+          <div data-v-6675b3bd="" class="px-4 flex-grow space-y-2">
+            <div data-v-6675b3bd="" class="flex justify-between text-muted">
+              <div data-v-6675b3bd="" class="flex space-x-2" style="position: absolute;"><img data-v-6675b3bd="" alt="username's profile picture"
+                  src={{user.profile_image_url_https}} class="w-6 h-6 rounded-full overflow-hidden"><a
+                  data-v-6675b3bd="" href="https://twitter.com/{{user.usernameAt}}" target="_blank">
+                  </a>
+              </div>
+              <div data-v-6675b3bd="" class="flex space-x-2"><img data-v-6675b3bd="" alt="username's profile picture"
+                  src={{user.profile_banner_url}} style="width: 100%; height:100%" class="w-6 h-6 rounded-full overflow-hidden"><a data-v-6675b3bd=""
+                  href="https://twitter.com/{{user.usernameAt}}" target="_blank">
+                </a>
+              </div>
+            </div>
+            <div data-v-6675b3bd="" dir="auto" class="whitespace-pre-wrap break-words"><span
+                style="white-space: pre-wrap;">{{user.description}}</span></div>
+          </div>
+          <hr data-v-6675b3bd="">
+          <div data-v-6675b3bd="" class="flex justify-between px-4 pb-2">
+            <div data-v-6675b3bd="" class="flex mb-2 space-x-2 text-sm text-muted">
+              <span data-v-6675b3bd="">{{user.following}} Following </span>
+              <span data-v-6675b3bd=""> {{user.followers}} Followers</span>
+              <a target="_blank" href="https://twitter.com/{{user.usernameAt}}" style="float: right;">
+                <button data-v-6675b3bd="" class="btn text small primary btn-sm">
+                  View On Twitter
+                </button>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class=""
+      style="box-sizing: border-box; background-clip: padding-box; width: 50%; border-width: 0px 0px 0px 16px; border-style: solid; border-color: transparent; border-image: initial;">
+      <div data-v-6675b3bd="">
+    
+        <div data-v-6675b3bd="" class="shadow-lg flex flex-col bg-block rounded-lg pt-4 space-y-2 mb-4"
+          *ngFor="let user of UserListRight">
+          <div data-v-6675b3bd="" class="px-4 flex-grow space-y-2">
+            <div data-v-6675b3bd="" class="flex justify-between text-muted">
+              <div data-v-6675b3bd="" class="flex space-x-2" style="position: absolute;"><img data-v-6675b3bd="" alt="username's profile picture"
+                  src={{user.profile_image_url_https}} class="w-6 h-6 rounded-full overflow-hidden"><a data-v-6675b3bd=""
+                  href="https://twitter.com/{{user.usernameAt}}" target="_blank">
+                  </a>
+              </div>
+              <div data-v-6675b3bd="" class="flex space-x-2"><img data-v-6675b3bd="" alt="username's profile picture"
+                  src={{user.profile_banner_url}} style="width: 100%; height:100%" class="w-6 h-6 rounded-full overflow-hidden"><a
+                  data-v-6675b3bd="" href="https://twitter.com/{{user.usernameAt}}" target="_blank">
+                </a>
+              </div>
+            </div>
+            <div data-v-6675b3bd="" dir="auto" class="whitespace-pre-wrap break-words"><span
+                style="white-space: pre-wrap;">{{user.description}}</span></div>
+          </div>
+          <hr data-v-6675b3bd="">
+          <div data-v-6675b3bd="" class="flex justify-between px-4 pb-2">
+            <div data-v-6675b3bd="" class="flex mb-2 space-x-2 text-sm text-muted">
+              <span data-v-6675b3bd="">{{user.following}} Following </span>
+              <span data-v-6675b3bd=""> {{user.followers}} Followers</span>
+              <a target="_blank" href="https://twitter.com/{{user.usernameAt}}" style="float: right;">
+                <button data-v-6675b3bd="" class="btn text small primary btn-sm">
+                  View On Twitter
+                </button>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

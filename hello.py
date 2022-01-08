@@ -2,6 +2,7 @@ from flask import Flask, jsonify
 from flask_cors import CORS
 import json
 from datetime import datetime,timedelta
+import requests
 
 import tweepy
 
@@ -192,9 +193,17 @@ def get_users_in_niche(keyword):
                 lastTweetTime = user._json['status']['created_at']
                 description = user._json['description']
 
+                banner = ""
+                if 'profile_banner_url' in user._json:
+                    banner = user._json['profile_banner_url']
+                else:
+                    banner = "https://pbs.twimg.com/profile_banners/3251189440/1515410621"
+
+
                 if validate_users_activity(userid, usernameAt.lower(), username.lower(), description.lower(), keyword.lower(), lastTweetTime) == False:
                     continue
-
+                # if(usernameAt == "SaaS_group"):
+                #     print(user._json)
                 userObject = {
                     "userid": userid,
                     "username": username,
@@ -203,6 +212,7 @@ def get_users_in_niche(keyword):
                     "followers": searchedUserFollowerCount,
                     "following": user._json['friends_count'],
                     "profile_image_url_https": user._json['profile_image_url_https'],
+                    "profile_banner_url": banner,
                     "statuses_count": user._json['statuses_count']
                 }
                 UserList.append(userObject)

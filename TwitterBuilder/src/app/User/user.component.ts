@@ -11,7 +11,8 @@ export class UsersComponent implements OnInit, OnDestroy {
   title = 'TwitterBuilder';
 
   UserListSubs: Subscription = new Subscription();;
-  UserList: User[];
+  UserListLeft: User[];
+  UserListRight: User[];
 
   constructor(private usersApi: UsersApiService, private route: ActivatedRoute) {
     console.log("app component constructor")
@@ -24,7 +25,8 @@ export class UsersComponent implements OnInit, OnDestroy {
         this.UserListSubs = this.usersApi
           .getUsers(params['searchTerm'])
           .subscribe(res => {
-            this.UserList = res;
+            this.UserListLeft = res.slice(0, res.length / 2);
+            this.UserListRight = res.slice(res.length / 2, res.length);
           },
             console.error
           );
