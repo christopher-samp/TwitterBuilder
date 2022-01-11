@@ -1,10 +1,11 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_cors import CORS
 import json
 from datetime import datetime,timedelta
 import requests
 
 import tweepy
+import UserSql
 
 #auth = ""
 #api = ""
@@ -230,6 +231,14 @@ def validate_users_activity(userid, screenName, name, description, keyword, last
         return False
 
     return True
+
+@app.route('/AddWatchListUser')
+def AddWatchListConnection():
+    watchListUserId = request.args.get('watchListUserId', None)
+    userId = request.args.get('userId', None)
+
+    UserSql.AddWatchListConnection(watchListUserId, userId)
+    return ""
 
 
 
