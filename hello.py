@@ -200,11 +200,9 @@ def get_users_in_niche(keyword):
                 else:
                     banner = "https://pbs.twimg.com/profile_banners/3251189440/1515410621"
 
-
                 if validate_users_activity(userid, usernameAt.lower(), username.lower(), description.lower(), keyword.lower(), lastTweetTime) == False:
                     continue
-                # if(usernameAt == "SaaS_group"):
-                #     print(user._json)
+
                 userObject = {
                     "userid": userid,
                     "username": username,
@@ -216,6 +214,7 @@ def get_users_in_niche(keyword):
                     "profile_banner_url": banner,
                     "statuses_count": user._json['statuses_count']
                 }
+                
                 UserList.append(userObject)
                 
     return jsonify(UserList)

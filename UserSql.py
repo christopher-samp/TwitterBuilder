@@ -9,9 +9,7 @@ def AddWatchListConnection(watchListUserId, userId):
   )
 
   myCursor = db.cursor()
-  #print("insert into testdatabase.WatchList values("+watchListUserId+", "+userId+")")
   myCursor.execute("insert into testdatabase.WatchList (WatchListUserId, UserId) values("+watchListUserId+", "+userId+")")
   db.commit()
-  print(myCursor.execute("select * from testdatabase.WatchList"))
   return True
 
