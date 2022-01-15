@@ -21,7 +21,7 @@ export class UsersApiService {
     return this.http.get<User[]>(`http://127.0.0.1:5000/NicheUsers/${searchTerm}`).pipe(catchError(this._handleError));
   }
 
-  addUserToWatchList(watchListUserId: number, userId: number) :Observable<string> {
+  addUserToWatchList(watchListUserId: string, userId: string) :Observable<string> {
     console.log("Sending AddWatchListUser Request")
     let parameters = new HttpParams()
       .set('watchListUserId', watchListUserId)

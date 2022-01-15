@@ -67,7 +67,6 @@ def recent_searches():
     UsersId = theTweet.includes['users'][0].id
     
     theUser = api.get_user(id=UsersId, user_auth=True, user_fields=['profile_image_url'])._json
-    print(theTweet)
     tweet = {
         "data": theTweet.data.text,
         "id": theTweet.data.id,
@@ -102,7 +101,7 @@ def get_watchlist_tweets():
     #call to sql to get list of users to get tweets for
     watchListIds = UserSql.GetWatchListConnections(contextUserId)
     for x in watchListIds:
-        tweets = client.get_users_tweets(id=x[0], user_auth=True, tweet_fields=['created_at'], user_fields=['username', 'name'], expansions='author_id')
+        tweets = client.get_users_tweets(id=x[0], user_auth=True, tweet_fields=['created_at','public_metrics'], user_fields=['username', 'name', 'profile_image_url'], expansions='author_id')
 
         users = {u["id"]: u for u in tweets.includes['users']}
         for tweet in tweets.data:
@@ -110,16 +109,20 @@ def get_watchlist_tweets():
                 user = users[tweet.author_id]
                 dtime = tweet["created_at"]
                 date_time = dtime.strftime("%m-%d-%Y, %H:%M:%S")
-
                 tweetObject = {
                     "name": user.name,
                     "username": user.username,
-                    "createdAt": date_time
+                    "date": date_time,
+                    "data": tweet["text"],
+                    "profile_image_url_https": user.profile_image_url,
+                    "id": str(tweet["id"]),
+                    "retweets": tweet["public_metrics"]["retweet_count"],
+                    "favorites": tweet["public_metrics"]["like_count"]
                 }
                 TweetList.append(tweetObject)
             continue
 
-    TweetList.sort(key=lambda x: datetime.strptime(str(x["createdAt"]), "%m-%d-%Y, %H:%M:%S"), reverse=True)
+    TweetList.sort(key=lambda x: datetime.strptime(str(x["date"]), "%m-%d-%Y, %H:%M:%S"), reverse=True)
     return jsonify(TweetList)
 
     
@@ -146,7 +149,7 @@ def get_user_by_id():
     
     user = {
         "name": fullUser['name'],
-        "id": fullUser['id'],
+        "id": str(fullUser['id']),
         "screen_name": fullUser['screen_name'],
         "followers_count": fullUser['followers_count'],
         "friends_count": fullUser['friends_count'],
@@ -182,8 +185,7 @@ def get_tweets_helper(keyword, resultType, numTweets):
     TweetList = []
     for status in tweepy.Cursor(api.search_tweets, keyword, tweet_mode = "extended", lang="en", result_type=resultType,
                             count=100).items(numTweets):
-        print(status._json)
-        
+
         favoriteCount=status._json['favorite_count']
         retweetCount=status._json['retweet_count']
 
@@ -199,7 +201,7 @@ def get_tweets_helper(keyword, resultType, numTweets):
             "date": status._json['created_at'],
             "profile_image_url_https": status._json['user']['profile_image_url_https'],
             "username": status._json['user']['screen_name'],
-            "userid": status._json['user']['id']
+            "userid": str(status._json['user']['id'])
         }
         TweetList.append(tweet)
         
@@ -250,7 +252,7 @@ def get_users_in_niche(keyword):
                     continue
 
                 userObject = {
-                    "userid": userid,
+                    "userid": str(userid),
                     "username": username,
                     "usernameAt": usernameAt,
                     "description" : description,

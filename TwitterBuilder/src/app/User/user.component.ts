@@ -34,7 +34,7 @@ export class UsersComponent implements OnInit, OnDestroy {
     })
   }
 
-  addToWatchList(watchListUserId: number, userId: number) {
+  addToWatchList(watchListUserId: string, userId: string) {
     this.usersApi.addUserToWatchList(watchListUserId, userId).subscribe();
   }
 
