@@ -73,9 +73,55 @@ def recent_searches():
         "id": theTweet.data.id,
         "profile_image_https": theUser['profile_image_url_https']
     }
-    tweetlist = [tweet]
+    tweetlist.append(tweet)
+
+
 
     return jsonify(tweetlist)
+
+@app.route('/GetWatchListTweets')
+def get_watchlist_tweets():
+    contextUserId = request.args.get('userId', None)
+    consumer_key = "niFrGMblGwSn7TzYPntdFqeEr"
+    consumer_secret = "T8d4UU9vahI4oUzVUX9Cxh2srs4axKXEZ6rbr0QvwPpOFfL52g"
+
+    # Your account's (the app owner's account's) access token and secret for your
+    # app can be found under the Authentication Tokens section of the
+    # Keys and Tokens tab of your app, under the
+    # Twitter Developer Portal Projects & Apps page at
+    # https://developer.twitter.com/en/portal/projects-and-apps
+    access_token = "369867339-8drZ7FPKl8BdZjgJdlnj07x82r5SWz4derBVfN8S"
+    access_token_secret = "bj3lqGkWCDABRMVA2LewMLvmd1K3YLPgcfNTUBMQ1FhMP"
+
+    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+    auth.set_access_token(access_token, access_token_secret)
+
+    api = tweepy.API(auth)
+    client = tweepy.Client(auth, consumer_key, consumer_secret, access_token, access_token_secret)
+    TweetList = []
+    #call to sql to get list of users to get tweets for
+    watchListIds = UserSql.GetWatchListConnections(contextUserId)
+    for x in watchListIds:
+        tweets = client.get_users_tweets(id=x[0], user_auth=True, tweet_fields=['created_at'], user_fields=['username', 'name'], expansions='author_id')
+
+        users = {u["id"]: u for u in tweets.includes['users']}
+        for tweet in tweets.data:
+            if users[tweet.author_id]:
+                user = users[tweet.author_id]
+                dtime = tweet["created_at"]
+                date_time = dtime.strftime("%m-%d-%Y, %H:%M:%S")
+
+                tweetObject = {
+                    "name": user.name,
+                    "username": user.username,
+                    "createdAt": date_time
+                }
+                TweetList.append(tweetObject)
+            continue
+
+    TweetList.sort(key=lambda x: datetime.strptime(str(x["createdAt"]), "%m-%d-%Y, %H:%M:%S"), reverse=True)
+    return jsonify(TweetList)
+
     
 @app.route('/GetUserById')
 def get_user_by_id():
@@ -131,7 +177,7 @@ def get_tweets_helper(keyword, resultType, numTweets):
     auth.set_access_token(access_token, access_token_secret)
 
     api = tweepy.API(auth)
-    client = tweepy.Client(auth, consumer_key, consumer_secret, access_token, access_token_secret)
+    #client = tweepy.Client(auth, consumer_key, consumer_secret, access_token, access_token_secret)
 
     TweetList = []
     for status in tweepy.Cursor(api.search_tweets, keyword, tweet_mode = "extended", lang="en", result_type=resultType,
