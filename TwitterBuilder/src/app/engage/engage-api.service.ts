@@ -20,4 +20,13 @@ export class EngageApiService {
       .set('userId', userId);
     return this.http.get<Tweet[]>('http://127.0.0.1:5000/GetWatchListTweets', { params: parameters }).pipe(catchError(this._handleError));
   }
+
+  ReplyToTweet(replyTweetId: string, status: string): Observable<any> {
+
+    let parameters = new HttpParams()
+      .set('replyTweetId', replyTweetId)
+      .set('status', status);
+
+    return this.http.get<any>('http://127.0.0.1:5000/ReplyToTweet', { params: parameters }).pipe(catchError(this._handleError));
+  }
 }

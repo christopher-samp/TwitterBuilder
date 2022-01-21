@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request
-from flask_cors import CORS
+from flask_cors import *
 import json
 from datetime import datetime,timedelta
 import requests
@@ -7,10 +7,9 @@ import requests
 import tweepy
 import UserSql
 
-#auth = ""
-#api = ""
 app = Flask(__name__)
-CORS(app)
+CORS(app, origins=["http://localhost:4200"])
+
 @app.route('/')
 def hello_world():
     get_auth_api()
@@ -31,8 +30,8 @@ def get_auth_api():
     # Keys and Tokens tab of your app, under the
     # Twitter Developer Portal Projects & Apps page at
     # https://developer.twitter.com/en/portal/projects-and-apps
-    access_token = "369867339-8drZ7FPKl8BdZjgJdlnj07x82r5SWz4derBVfN8S"
-    access_token_secret = "bj3lqGkWCDABRMVA2LewMLvmd1K3YLPgcfNTUBMQ1FhMP"
+    access_token = "369867339-q5DSx09GROTNKesxvkexFO7cXszkGQQMGfx4lrZU"
+    access_token_secret = "HJBb0vnWOJxwdLhjEuGOELWMB5PrVIjQAjk1FNfcdxhIu"
 
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_token, access_token_secret)
@@ -52,8 +51,8 @@ def recent_searches():
     # Keys and Tokens tab of your app, under the
     # Twitter Developer Portal Projects & Apps page at
     # https://developer.twitter.com/en/portal/projects-and-apps
-    access_token = "369867339-8drZ7FPKl8BdZjgJdlnj07x82r5SWz4derBVfN8S"
-    access_token_secret = "bj3lqGkWCDABRMVA2LewMLvmd1K3YLPgcfNTUBMQ1FhMP"
+    access_token = "369867339-q5DSx09GROTNKesxvkexFO7cXszkGQQMGfx4lrZU"
+    access_token_secret = "HJBb0vnWOJxwdLhjEuGOELWMB5PrVIjQAjk1FNfcdxhIu"
 
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_token, access_token_secret)
@@ -89,8 +88,8 @@ def get_watchlist_tweets():
     # Keys and Tokens tab of your app, under the
     # Twitter Developer Portal Projects & Apps page at
     # https://developer.twitter.com/en/portal/projects-and-apps
-    access_token = "369867339-8drZ7FPKl8BdZjgJdlnj07x82r5SWz4derBVfN8S"
-    access_token_secret = "bj3lqGkWCDABRMVA2LewMLvmd1K3YLPgcfNTUBMQ1FhMP"
+    access_token = "369867339-q5DSx09GROTNKesxvkexFO7cXszkGQQMGfx4lrZU"
+    access_token_secret = "HJBb0vnWOJxwdLhjEuGOELWMB5PrVIjQAjk1FNfcdxhIu"
 
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_token, access_token_secret)
@@ -136,8 +135,8 @@ def get_user_by_id():
     # Keys and Tokens tab of your app, under the
     # Twitter Developer Portal Projects & Apps page at
     # https://developer.twitter.com/en/portal/projects-and-apps
-    access_token = "369867339-8drZ7FPKl8BdZjgJdlnj07x82r5SWz4derBVfN8S"
-    access_token_secret = "bj3lqGkWCDABRMVA2LewMLvmd1K3YLPgcfNTUBMQ1FhMP"
+    access_token = "369867339-q5DSx09GROTNKesxvkexFO7cXszkGQQMGfx4lrZU"
+    access_token_secret = "HJBb0vnWOJxwdLhjEuGOELWMB5PrVIjQAjk1FNfcdxhIu"
 
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_token, access_token_secret)
@@ -173,8 +172,8 @@ def get_tweets_helper(keyword, resultType, numTweets):
     # Keys and Tokens tab of your app, under the
     # Twitter Developer Portal Projects & Apps page at
     # https://developer.twitter.com/en/portal/projects-and-apps
-    access_token = "369867339-8drZ7FPKl8BdZjgJdlnj07x82r5SWz4derBVfN8S"
-    access_token_secret = "bj3lqGkWCDABRMVA2LewMLvmd1K3YLPgcfNTUBMQ1FhMP"
+    access_token = "369867339-q5DSx09GROTNKesxvkexFO7cXszkGQQMGfx4lrZU"
+    access_token_secret = "HJBb0vnWOJxwdLhjEuGOELWMB5PrVIjQAjk1FNfcdxhIu"
 
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_token, access_token_secret)
@@ -217,8 +216,8 @@ def get_users_in_niche(keyword):
     # Keys and Tokens tab of your app, under the
     # Twitter Developer Portal Projects & Apps page at
     # https://developer.twitter.com/en/portal/projects-and-apps
-    access_token = "369867339-8drZ7FPKl8BdZjgJdlnj07x82r5SWz4derBVfN8S"
-    access_token_secret = "bj3lqGkWCDABRMVA2LewMLvmd1K3YLPgcfNTUBMQ1FhMP"
+    access_token = "369867339-q5DSx09GROTNKesxvkexFO7cXszkGQQMGfx4lrZU"
+    access_token_secret = "HJBb0vnWOJxwdLhjEuGOELWMB5PrVIjQAjk1FNfcdxhIu"
 
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_token, access_token_secret)
@@ -286,6 +285,35 @@ def AddWatchListConnection():
 
     UserSql.AddWatchListConnection(watchListUserId, userId)
     return ""
+
+@app.route('/ReplyToTweet')
+def ReplyToTweet():
+    replyTweetId = request.args.get('replyTweetId', None)
+    print(replyTweetId)
+    data = request.args.get('status', None)
+
+    consumer_key = "niFrGMblGwSn7TzYPntdFqeEr"
+    consumer_secret = "T8d4UU9vahI4oUzVUX9Cxh2srs4axKXEZ6rbr0QvwPpOFfL52g"
+
+    # Your account's (the app owner's account's) access token and secret for your
+    # app can be found under the Authentication Tokens section of the
+    # Keys and Tokens tab of your app, under the
+    # Twitter Developer Portal Projects & Apps page at
+    # https://developer.twitter.com/en/portal/projects-and-apps
+    access_token = "369867339-q5DSx09GROTNKesxvkexFO7cXszkGQQMGfx4lrZU"
+    access_token_secret = "HJBb0vnWOJxwdLhjEuGOELWMB5PrVIjQAjk1FNfcdxhIu"
+
+    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+    auth.set_access_token(access_token, access_token_secret)
+
+    api = tweepy.API(auth)
+
+    api.update_status(status=data, in_reply_to_status_id=replyTweetId)
+
+    return jsonify(success=True)
+
+
+
 
 
 

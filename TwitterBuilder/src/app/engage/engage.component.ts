@@ -31,6 +31,14 @@ export class EngageComponent implements OnInit, OnDestroy {
     });
   }
 
+  replyToTweet(replyTweetId: string, status: string, username: string) {
+    console.log(replyTweetId);
+    console.log(status);
+    var fullstatus: string;
+    fullstatus = `@${username} ${status}`;
+    this.engageApi.ReplyToTweet(replyTweetId, fullstatus).subscribe();
+  }
+
   ngOnDestroy() {
     this.EngageListSubs.unsubscribe();
   }
