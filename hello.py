@@ -101,7 +101,7 @@ def get_watchlist_tweets():
     #call to sql to get list of users to get tweets for
     watchListIds = UserSql.GetWatchListConnections(contextUserId)
     for x in watchListIds:
-        tweets = client.get_users_tweets(id=x[0], user_auth=True, tweet_fields=['created_at','public_metrics'], user_fields=['username', 'name', 'profile_image_url'], expansions='author_id')
+        tweets = client.get_users_tweets(id=x[0], user_auth=True, exclude=['retweets','replies'], tweet_fields=['created_at','public_metrics'], user_fields=['username', 'name', 'profile_image_url'], expansions='author_id')
 
         users = {u["id"]: u for u in tweets.includes['users']}
         for tweet in tweets.data:
