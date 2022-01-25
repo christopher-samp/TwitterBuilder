@@ -125,8 +125,8 @@ def get_watchlist_tweets():
     return jsonify(TweetList)
 
     
-@app.route('/GetUserById')
-def get_user_by_id():
+@app.route('/GetUserById/<userid>')
+def get_user_by_id(userid):
     consumer_key = "niFrGMblGwSn7TzYPntdFqeEr"
     consumer_secret = "T8d4UU9vahI4oUzVUX9Cxh2srs4axKXEZ6rbr0QvwPpOFfL52g"
 
@@ -144,7 +144,7 @@ def get_user_by_id():
     api = tweepy.API(auth)
     # client = tweepy.Client(auth, consumer_key, consumer_secret, access_token, access_token_secret)
 
-    fullUser = api.get_user(id=369867339,user_auth=True, user_fields=['profile_image_url','public_metrics'])._json
+    fullUser = api.get_user(id=userid,user_auth=True, user_fields=['profile_image_url','public_metrics'])._json
     
     user = {
         "name": fullUser['name'],
@@ -154,6 +154,41 @@ def get_user_by_id():
         "friends_count": fullUser['friends_count'],
         "statuses_count": fullUser['statuses_count'],
         "profile_image_url_https": fullUser['profile_image_url']
+    }
+    userList = [user]
+
+    return jsonify(userList)
+
+@app.route('/GetUserByScreenName/<screenName>')
+def get_user_by_screen_name(screenName):
+    consumer_key = "niFrGMblGwSn7TzYPntdFqeEr"
+    consumer_secret = "T8d4UU9vahI4oUzVUX9Cxh2srs4axKXEZ6rbr0QvwPpOFfL52g"
+
+    # Your account's (the app owner's account's) access token and secret for your
+    # app can be found under the Authentication Tokens section of the
+    # Keys and Tokens tab of your app, under the
+    # Twitter Developer Portal Projects & Apps page at
+    # https://developer.twitter.com/en/portal/projects-and-apps
+    access_token = "369867339-q5DSx09GROTNKesxvkexFO7cXszkGQQMGfx4lrZU"
+    access_token_secret = "HJBb0vnWOJxwdLhjEuGOELWMB5PrVIjQAjk1FNfcdxhIu"
+
+    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+    auth.set_access_token(access_token, access_token_secret)
+
+    api = tweepy.API(auth)
+    
+    fullUser = api.get_user(screen_name=screenName,user_auth=True, user_fields=['profile_image_url','public_metrics','profile_banner_url'])._json
+    
+    user = {
+        "name": fullUser['name'],
+        "id": str(fullUser['id']),
+        "screen_name": fullUser['screen_name'],
+        "followers_count": fullUser['followers_count'],
+        "friends_count": fullUser['friends_count'],
+        "statuses_count": fullUser['statuses_count'],
+        "profile_image_url_https": fullUser['profile_image_url'],
+        "description": fullUser['description'],
+        "profile_banner_url": fullUser['profile_banner_url']
     }
     userList = [user]
 
@@ -225,10 +260,36 @@ def get_users_in_niche(keyword):
     api = tweepy.API(auth)
     client = tweepy.Client(auth, consumer_key, consumer_secret, access_token, access_token_secret)
 
-    contextUser = json.loads(get_user_by_id().get_data())
+    contextUser = json.loads(get_user_by_id(369867339).get_data())
     contextUserFollowers = contextUser[0]['followers_count']
 
     UserList = []
+
+    if("@" in keyword):
+        user = json.loads(get_user_by_screen_name(keyword).get_data())
+        print(user)
+        banner = ""
+        if 'profile_banner_url' in user[0]:
+            banner = user[0]['profile_banner_url']
+        else:
+            banner = "https://pbs.twimg.com/profile_banners/3251189440/1515410621"
+
+        userObject = {
+                    "userid": user[0]['id'],
+                    "username": user[0]['name'],
+                    "usernameAt": user[0]['screen_name'],
+                    "description" : user[0]['description'],
+                    "followers": user[0]['followers_count'],
+                    "following": user[0]['friends_count'],
+                    "profile_image_url_https": user[0]['profile_image_url_https'],
+                    "profile_banner_url": banner,
+                    "statuses_count": user[0]['statuses_count']
+                }
+                
+        UserList.append(userObject)
+        return jsonify(UserList)
+
+
     while(len(UserList) < 10):
         for user in tweepy.Cursor(api.search_users, keyword,
                                 count=50).items(50):
