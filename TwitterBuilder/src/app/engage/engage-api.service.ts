@@ -29,4 +29,13 @@ export class EngageApiService {
 
     return this.http.get<any>('http://127.0.0.1:5000/ReplyToTweet', { params: parameters }).pipe(catchError(this._handleError));
   }
+
+  removeFromWatchList(watchListUserId: string, userId: string): Observable<string> {
+    console.log("Sending RemoveFromWatchList Request")
+    let parameters = new HttpParams()
+      .set('watchListUserId', watchListUserId)
+      .set('userId', userId);
+
+    return this.http.get<string>('http://127.0.0.1:5000/RemoveFromWatchList', { params: parameters }).pipe(catchError(this._handleError));
+  }
 }

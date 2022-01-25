@@ -8,14 +8,12 @@ import tweepy
 import UserSql
 
 app = Flask(__name__)
-CORS(app, origins=["http://localhost:4200"])
+CORS(app, resources={r"/*": {"origins": "*"}})#,origins=["http://localhost:4200"])
 
 @app.route('/')
 def hello_world():
     get_auth_api()
     return "hello world!"
-
-    
     
 def get_auth_api():
     # Your app's API/consumer key and secret can be found under the Consumer Keys
@@ -100,7 +98,7 @@ def get_watchlist_tweets():
     #call to sql to get list of users to get tweets for
     watchListIds = UserSql.GetWatchListConnections(contextUserId)
     for x in watchListIds:
-        tweets = client.get_users_tweets(id=x[0], user_auth=True, exclude=['retweets','replies'], tweet_fields=['created_at','public_metrics'], user_fields=['username', 'name', 'profile_image_url'], expansions='author_id')
+        tweets = client.get_users_tweets(id=x[0], user_auth=True, exclude=['retweets','replies'], tweet_fields=['created_at','public_metrics'], user_fields=['username', 'name', 'id', 'profile_image_url'], expansions='author_id')
 
         users = {u["id"]: u for u in tweets.includes['users']}
         for tweet in tweets.data:
@@ -116,7 +114,8 @@ def get_watchlist_tweets():
                     "profile_image_url_https": user.profile_image_url,
                     "id": str(tweet["id"]),
                     "retweets": tweet["public_metrics"]["retweet_count"],
-                    "favorites": tweet["public_metrics"]["like_count"]
+                    "favorites": tweet["public_metrics"]["like_count"],
+                    "userid": str(user.id)
                 }
                 TweetList.append(tweetObject)
             continue
@@ -345,6 +344,14 @@ def AddWatchListConnection():
     userId = request.args.get('userId', None)
 
     UserSql.AddWatchListConnection(watchListUserId, userId)
+    return ""
+
+@app.route('/RemoveFromWatchList')
+def RemoveFromWatchListConnection():
+    watchListUserId = request.args.get('watchListUserId', None)
+    userId = request.args.get('userId', None)
+
+    UserSql.RemoveFromWatchListConnection(watchListUserId, userId)
     return ""
 
 @app.route('/ReplyToTweet')

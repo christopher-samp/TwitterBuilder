@@ -39,6 +39,10 @@ export class EngageComponent implements OnInit, OnDestroy {
     this.engageApi.ReplyToTweet(replyTweetId, fullstatus).subscribe();
   }
 
+  removeFromWatchList(watchListUserId: string, userId: string) {
+    this.engageApi.removeFromWatchList(watchListUserId, userId).subscribe();
+  }
+
   ngOnDestroy() {
     this.EngageListSubs.unsubscribe();
   }
