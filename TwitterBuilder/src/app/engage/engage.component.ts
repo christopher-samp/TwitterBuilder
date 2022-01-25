@@ -12,6 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 export class EngageComponent implements OnInit, OnDestroy {
   EngageListSubs: Subscription = new Subscription();
   TweetList: Tweet[];
+  retweetButtonValue: boolean;
 
   constructor(private engageApi: EngageApiService, private route: ActivatedRoute) {
     
@@ -34,13 +35,18 @@ export class EngageComponent implements OnInit, OnDestroy {
   replyToTweet(replyTweetId: string, status: string, username: string) {
     console.log(replyTweetId);
     console.log(status);
+    console.log(`retweet value ${this.retweetButtonValue}`);
     var fullstatus: string;
     fullstatus = `@${username} ${status}`;
-    this.engageApi.ReplyToTweet(replyTweetId, fullstatus).subscribe();
+    this.engageApi.ReplyToTweet(replyTweetId, fullstatus, this.retweetButtonValue).subscribe();
   }
 
   removeFromWatchList(watchListUserId: string, userId: string) {
     this.engageApi.removeFromWatchList(watchListUserId, userId).subscribe();
+  }
+
+  public onSaveRetweetChanged(value: boolean) {
+    this.retweetButtonValue = value;
   }
 
   ngOnDestroy() {

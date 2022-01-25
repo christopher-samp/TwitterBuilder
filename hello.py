@@ -1,14 +1,13 @@
 from flask import Flask, jsonify, request
-from flask_cors import *
+from flask_cors import CORS
 import json
 from datetime import datetime,timedelta
 import requests
-
 import tweepy
 import UserSql
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "*"}})#,origins=["http://localhost:4200"])
+CORS(app)
 
 @app.route('/')
 def hello_world():
@@ -22,7 +21,6 @@ def get_auth_api():
     # https://developer.twitter.com/en/portal/projects-and-apps
     consumer_key = "niFrGMblGwSn7TzYPntdFqeEr"
     consumer_secret = "T8d4UU9vahI4oUzVUX9Cxh2srs4axKXEZ6rbr0QvwPpOFfL52g"
-
     # Your account's (the app owner's account's) access token and secret for your
     # app can be found under the Authentication Tokens section of the
     # Keys and Tokens tab of your app, under the
@@ -177,6 +175,12 @@ def get_user_by_screen_name(screenName):
     api = tweepy.API(auth)
     
     fullUser = api.get_user(screen_name=screenName,user_auth=True, user_fields=['profile_image_url','public_metrics','profile_banner_url'])._json
+
+    banner = ""
+    if "profile_banner_url" in fullUser:
+        banner = fullUser['profile_banner_url']
+    else:
+        banner = "https://pbs.twimg.com/profile_banners/3251189440/1515410621"
     
     user = {
         "name": fullUser['name'],
@@ -187,7 +191,7 @@ def get_user_by_screen_name(screenName):
         "statuses_count": fullUser['statuses_count'],
         "profile_image_url_https": fullUser['profile_image_url'],
         "description": fullUser['description'],
-        "profile_banner_url": fullUser['profile_banner_url']
+        "profile_banner_url": banner
     }
     userList = [user]
 
@@ -357,6 +361,8 @@ def RemoveFromWatchListConnection():
 @app.route('/ReplyToTweet')
 def ReplyToTweet():
     replyTweetId = request.args.get('replyTweetId', None)
+    retweetResponse = request.args.get('retweetResponse', None)
+
     print(replyTweetId)
     data = request.args.get('status', None)
 
@@ -375,8 +381,14 @@ def ReplyToTweet():
     auth.set_access_token(access_token, access_token_secret)
 
     api = tweepy.API(auth)
+    client = tweepy.Client(auth, consumer_key, consumer_secret, access_token, access_token_secret)
 
-    api.update_status(status=data, in_reply_to_status_id=replyTweetId)
+    tweet = api.update_status(status=data, in_reply_to_status_id=replyTweetId)._json
+
+    if(retweetResponse == "true"):
+        client.retweet(tweet_id=tweet['id_str'])
+    
+    client.like(tweet_id=replyTweetId)
 
     return jsonify(success=True)
 

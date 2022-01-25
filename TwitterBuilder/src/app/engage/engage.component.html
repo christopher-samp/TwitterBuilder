@@ -60,6 +60,8 @@
             style="float:right; width: 50%; box-sizing: border-box; border-width: 0px 0px 0px 16px;">
             <textarea #Status class="flex form-control input-sm" rows="5" columns="50" style="resize: none; width:100%; height:auto; background-color: transparent; color:lightgray;"></textarea>
             <button class="btn text small primary btn-sm" style="float: right;" (click)="replyToTweet(tweet.id, Status.value, tweet.username)">Submit</button>
+            <input #Retweet type="checkbox" name="retweetButton" (change)="onSaveRetweetChanged(Retweet.checked)" style="float: right;">
+            <label style="float: right;">Retweet Reply </label><br>
           </div>
       </div>
     </div>
