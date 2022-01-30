@@ -21,16 +21,20 @@ def hello_world():
     get_auth_api()
     return "hello world!"
 
-@scheduler.task('interval', id='tweet_scheduler_job', seconds=5, misfire_grace_time=900)
+@scheduler.task('interval', id='tweet_scheduler_job', seconds=60, misfire_grace_time=900)
 def tweet_scheduler():
-    now = datetime.now()
-    now.strftime("%Y-%m-%d %H:%M")
+    now = datetime.now().replace(second=0, microsecond=0)
+    now.strftime('%Y-%m-%d %H:%M')
+    print(now)
     tweets = UserSql.CheckForScheduledTweets(now)
+    print(tweets)
+    
 
     #check if tweets are empty, if they are continue, if they aren't tweet them, then update the sent tweets table
-    print("TEST")
+    if(tweets != []):
+        sendTweet(tweets)
 
-    UserSql.CheckForScheduledTweets()
+    print("TEST")
     
 def get_auth_api():
     # Your app's API/consumer key and secret can be found under the Consumer Keys
@@ -410,13 +414,41 @@ def ReplyToTweet():
 
     return jsonify(success=True)
 
+def sendTweet(tweets):
+    consumer_key = "niFrGMblGwSn7TzYPntdFqeEr"
+    consumer_secret = "T8d4UU9vahI4oUzVUX9Cxh2srs4axKXEZ6rbr0QvwPpOFfL52g"
+
+    # Your account's (the app owner's account's) access token and secret for your
+    # app can be found under the Authentication Tokens section of the
+    # Keys and Tokens tab of your app, under the
+    # Twitter Developer Portal Projects & Apps page at
+    # https://developer.twitter.com/en/portal/projects-and-apps
+    access_token = "369867339-q5DSx09GROTNKesxvkexFO7cXszkGQQMGfx4lrZU"
+    access_token_secret = "HJBb0vnWOJxwdLhjEuGOELWMB5PrVIjQAjk1FNfcdxhIu"
+
+    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+    auth.set_access_token(access_token, access_token_secret)
+
+    api = tweepy.API(auth)
+    lastUserId='default'
+    for tweet in tweets:
+        if(tweet['threadorderid'] != 1 and tweet['userid'] == lastUserId):
+            newReplyTweet = api.update_status(status=tweet['tweetcontent'], in_reply_to_status_id=newReplyTweet['id_str'])._json
+        else:
+            newReplyTweet = api.update_status(status=tweet['tweetcontent'])._json
+
+        lastUserId = tweet['userid']
+
+
 @app.route('/ScheduleTweet')
 def ScheduleTweet():
     tweets = request.args.get('tweets', None)
-    returnValue = UserSql.InsertIntoScheduledTweets(tweets)
+    print("Tweet JSON: "+tweets)
+    tweetObjects = json.loads(tweets)
+    returnValue = UserSql.InsertIntoScheduledTweets(tweetObjects)
     return jsonify(success=True)
 
-#scheduler.start()
+scheduler.start()
 
 
 

@@ -49,13 +49,12 @@ def InsertIntoScheduledTweets(tweets):
   )
 
   myCursor = db.cursor()
-  threadOrder = 1
   for tweet in tweets:
+    print(tweet)
     insertQuery = ('INSERT INTO ScheduledTweets '
                   '(userid, tweetcontent, timetosend, sent, done, tweettype, threadorderid) '
                   'VALUES '
-                  '("%s","%s", "%s", "0", "0", "%s", "%s")' % (tweet.userid, tweet.data, tweet.date, tweet.tweetType, threadOrder))
-    threadOrder = threadOrder+1
+                  '("%s","%s", "%s", "0", "0", "%s", "%s")' % (tweet["userid"], tweet["tweetContent"], tweet["timeToSend"], tweet["tweetType"], tweet["threadOrderId"]))
 
     myCursor.execute(insertQuery)
     db.commit()
@@ -72,10 +71,27 @@ def CheckForScheduledTweets(time):
 
   myCursor = db.cursor()
 
-  myCursor.execute("SELECT * FROM testdatabase.ScheduledTweets where timetosend = "+time)
+  myCursor.execute('SELECT * FROM testdatabase.ScheduledTweets where timetosend = "%s"' % (str(time)))
   
-  return myCursor.fetchall()
+  tweets = myCursor.fetchall()
+
+  tweetList = []
+  for tweet in tweets:
+    tweetObject = {
+      "id" : tweet[0],
+      "userid" : tweet[1],
+      "tweetcontent" : tweet[2],
+      "timetosend" : tweet[3],
+      "sent" : tweet[4],
+      "timesent" : tweet[5],
+      "done" : tweet[6],
+      "tweettype" : tweet[7],
+      "threadorderid" : tweet[8]
+    }
+
+    tweetList.append(tweetObject)
   
+  return tweetList
 
 # CREATE TABLE ScheduledTweets (
 #                                     id int unsigned NOT NULL AUTO_INCREMENT, 

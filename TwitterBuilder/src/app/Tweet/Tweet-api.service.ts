@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError} from 'rxjs';
 import { API_URL } from '../env';
 import { Tweet } from './Tweet.model';
@@ -19,6 +19,14 @@ export class TweetsApiService {
   getTweets(searchTerm: string): Observable<Tweet[]> {
     console.log("getting tweets")
     return this.http.get<Tweet[]>(`http://127.0.0.1:5000/GetTweets/${searchTerm}`).pipe(catchError(this._handleError));
+  }
+
+  scheduleTweet(tweets: string): Observable<string> {
+    console.log("Sending ScheduleTweet Request")
+    let parameters = new HttpParams()
+      .set('tweets', tweets);
+
+    return this.http.get<string>('http://127.0.0.1:5000/ScheduleTweet', { params: parameters }).pipe(catchError(this._handleError));
   }
 }
 

@@ -107,9 +107,16 @@
       </div>
     </div>
   </div>
-  <!-- <div data-v-6675b3bd="" class="shadow-lg flex flex-col bg-block rounded-lg flex space-x-2"
+  <div data-v-6675b3bd="" id="current_date" class="shadow-lg flex flex-col bg-block rounded-lg flex space-x-2"
     style="float:right; width: 20%; box-sizing: border-box; border-width: 0px 0px 0px 16px;">
-    <textarea class="flex form-control input-sm" rows="5" columns="50"
+    <textarea #TweetText class="flex form-control input-sm" rows="5" columns="50"
       style="resize: none; width:100%; height:auto; background-color: transparent; color:lightgray;"></textarea>
-  </div> -->
+    <input #ScheduledDate id="dateSelector" type="datetime-local" value="getDate()" min="getDate()" max="2022-12-31T00:00">
+    <!-- <script>
+      document.getElementById("dateSelector").v = "2015-01-02T11:42:13.510";
+    </script> -->
+    <button class="btn text small primary btn-sm" style="float: right; width: 30%"
+      (click)="scheduleTweet(TweetText.value, '369867339', ScheduledDate.value)">Submit</button>
+
+  </div>
 </div>
