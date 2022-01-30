@@ -5,14 +5,32 @@ from datetime import datetime,timedelta
 import requests
 import tweepy
 import UserSql
+from flask_apscheduler import APScheduler
 
 app = Flask(__name__)
 CORS(app)
+
+scheduler = APScheduler()
+# if you don't wanna use a config, you can set options here:
+# scheduler.api_enabled = True
+scheduler.init_app(app)
+
 
 @app.route('/')
 def hello_world():
     get_auth_api()
     return "hello world!"
+
+@scheduler.task('interval', id='tweet_scheduler_job', seconds=5, misfire_grace_time=900)
+def tweet_scheduler():
+    now = datetime.now()
+    now.strftime("%Y-%m-%d %H:%M")
+    tweets = UserSql.CheckForScheduledTweets(now)
+
+    #check if tweets are empty, if they are continue, if they aren't tweet them, then update the sent tweets table
+    print("TEST")
+
+    UserSql.CheckForScheduledTweets()
     
 def get_auth_api():
     # Your app's API/consumer key and secret can be found under the Consumer Keys
@@ -392,9 +410,13 @@ def ReplyToTweet():
 
     return jsonify(success=True)
 
+@app.route('/ScheduleTweet')
+def ScheduleTweet():
+    tweets = request.args.get('tweets', None)
+    returnValue = UserSql.InsertIntoScheduledTweets(tweets)
+    return jsonify(success=True)
 
-
-
+#scheduler.start()
 
 
 
