@@ -15,6 +15,8 @@ export class TweetsComponent implements OnInit, OnDestroy {
   TweetListRight: Tweet[];
   tweet: ScheduledTweet;
   tweets: any[] = [];
+  tweetText: string[] = ["world", "asdf"];
+
 
   constructor(private tweetsApi: TweetsApiService, private route: ActivatedRoute) {
     console.log("app component constructor")
