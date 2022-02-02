@@ -15,7 +15,8 @@ export class TweetsComponent implements OnInit, OnDestroy {
   TweetListRight: Tweet[];
   tweet: ScheduledTweet;
   tweets: any[] = [];
-  tweetText: string[] = ["world", "asdf"];
+  tweetText: string[] = [""];
+  tweetchars: number = 0;
 
 
   constructor(private tweetsApi: TweetsApiService, private route: ActivatedRoute) {
@@ -32,6 +33,10 @@ export class TweetsComponent implements OnInit, OnDestroy {
           .subscribe(res => {
             this.TweetListLeft = res.slice(0, res.length / 2);
             this.TweetListRight = res.slice(res.length / 2, res.length);
+
+            this.TweetListLeft.sort((a, b) => (a.favorites > b.favorites ? -1 : 1));
+            this.TweetListRight.sort((a, b) => (a.favorites > b.favorites ? -1 : 1));
+
             console.log(res);
           },
             console.error
@@ -62,6 +67,30 @@ export class TweetsComponent implements OnInit, OnDestroy {
     console.log(today);
     return today;
   }
+
+  addTextArea() {
+    console.log("here");
+    var div = document.getElementById('tweet_boxes');
+    if (div) {
+      console.log(div.innerHTML)
+      div.innerHTML += "<textarea #TweetText2 [ngModel]='tweetText[1]' (ngModelChange)='modelChangeFn2($event)' class='flex form - control input - sm' rows='5' columns='50' style = 'resize: none; width:100%; height:auto; background-color: transparent; color:lightgray;' > </textarea>";
+      console.log(div.innerHTML)
+      // this.tweetText.push("abc");
+      console.log(this.tweetText)
+    }
+  }
+
+  modelChangeFn(value: string) {
+    console.log("modelChangeFn")
+    this.tweetText[0] = value;
+    console.log(this.tweetText[0]);
+    this.tweetchars = this.tweetText[0].length;
+    var charCountLabel = document.getElementById('charcount')
+    if (charCountLabel) {
+      charCountLabel.innerHTML = this.tweetchars + "/280";
+    }
+  }
+
 
   ngOnDestroy() {
     this.TweetListSubs.unsubscribe();

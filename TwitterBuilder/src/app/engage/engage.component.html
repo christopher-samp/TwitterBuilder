@@ -6,7 +6,7 @@
 
     <div class=""
       style="box-sizing: border-box; background-clip: padding-box; width: 100%; border-width: 0px 0px 0px 16px; border-style: solid; border-color: transparent; border-image: initial;"
-      *ngFor="let tweet of TweetList">
+      *ngFor="let tweet of TweetList; let i = index">
       <div data-v-6675b3bd="" >
 
         
@@ -58,9 +58,10 @@
           </div>
           <div data-v-6675b3bd="" class="shadow-lg flex flex-col bg-block rounded-lg flex space-x-2"
             style="float:right; width: 50%; box-sizing: border-box; border-width: 0px 0px 0px 16px;">
-            <textarea #Status class="flex form-control input-sm" rows="5" columns="50" style="resize: none; width:100%; height:auto; background-color: transparent; color:lightgray;"></textarea>
-            <button class="btn text small primary btn-sm" style="float: right;" (click)="replyToTweet(tweet.id, Status.value, tweet.username)">Submit</button>
-            <input #Retweet type="checkbox" name="retweetButton" (change)="onSaveRetweetChanged(Retweet.checked)" style="float: right;">
+            <textarea [ngModel]="tweetText[i]" (ngModelChange)="modelChangeFn($event, i)" class="flex form-control input-sm" rows="5" columns="50" style="resize: none; width:100%; height:auto; background-color: transparent; color:lightgray;"></textarea>
+            <label id="charcount{{i}}" [ngModel]="tweetchars[i]" type="text" style="float: left;">0/280</label>
+            <button class="btn text small primary btn-sm" style="float: right;" (click)="replyToTweet(tweet.id, tweet.username, i)">Submit</button>
+            <input #Retweet [ngModel]="retweetBox[i]" (ngModelChange)="onSaveRetweetChanged($event, i)" type="checkbox" name="retweetButton" style="float: right;">
             <label style="float: right;">Retweet Reply </label><br>
           </div>
       </div>

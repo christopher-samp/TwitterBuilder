@@ -221,7 +221,7 @@ def get_user_by_screen_name(screenName):
 
 @app.route('/GetTweets/<keyword>')
 def get_tweets(keyword):
-    return get_tweets_helper(keyword, "popular", 10)
+    return get_tweets_helper(keyword, "mixed", 100)
 
 def get_tweets_helper(keyword, resultType, numTweets):
     consumer_key = "niFrGMblGwSn7TzYPntdFqeEr"
@@ -448,7 +448,7 @@ def ScheduleTweet():
     returnValue = UserSql.InsertIntoScheduledTweets(tweetObjects)
     return jsonify(success=True)
 
-scheduler.start()
+#scheduler.start()
 
 
 

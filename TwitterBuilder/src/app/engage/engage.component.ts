@@ -12,7 +12,9 @@ import { ActivatedRoute } from '@angular/router';
 export class EngageComponent implements OnInit, OnDestroy {
   EngageListSubs: Subscription = new Subscription();
   TweetList: Tweet[];
-  retweetButtonValue: boolean;
+  retweetBox: boolean[] = [];
+  tweetchars: number[] = [];
+  tweetText: string[] = [];
 
   constructor(private engageApi: EngageApiService, private route: ActivatedRoute) {
     
@@ -32,21 +34,33 @@ export class EngageComponent implements OnInit, OnDestroy {
     });
   }
 
-  replyToTweet(replyTweetId: string, status: string, username: string) {
+  replyToTweet(replyTweetId: string, username: string, index: number) {
     console.log(replyTweetId);
-    console.log(status);
-    console.log(`retweet value ${this.retweetButtonValue}`);
+    console.log(this.tweetText[index]);
+    console.log(`retweet value ${this.retweetBox[index]}`);
     var fullstatus: string;
-    fullstatus = `@${username} ${status}`;
-    this.engageApi.ReplyToTweet(replyTweetId, fullstatus, this.retweetButtonValue).subscribe();
+    fullstatus = `@${username} ${this.tweetText[index]}`;
+    this.engageApi.ReplyToTweet(replyTweetId, fullstatus, this.retweetBox[index]).subscribe();
   }
 
   removeFromWatchList(watchListUserId: string, userId: string) {
     this.engageApi.removeFromWatchList(watchListUserId, userId).subscribe();
   }
 
-  public onSaveRetweetChanged(value: boolean) {
-    this.retweetButtonValue = value;
+  public onSaveRetweetChanged(value: boolean, index: number) {
+    this.retweetBox[index] = value;
+    console.log(this.retweetBox)
+  }
+
+  modelChangeFn(value: string, index: number) {
+    console.log("modelChangeFn")
+    this.tweetText[index] = value;
+    console.log(this.tweetText[index]);
+    this.tweetchars[index] = this.tweetText[index].length;
+    var charCountLabel = document.getElementById('charcount'+index)
+    if (charCountLabel) {
+      charCountLabel.innerHTML = this.tweetchars[index] + "/280";
+    }
   }
 
   ngOnDestroy() {

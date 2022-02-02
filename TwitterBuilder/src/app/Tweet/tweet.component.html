@@ -6,12 +6,13 @@
   <div data-v-6675b3bd="" class="categories-shadow bottom"></div>
   <div data-v-6675b3bd="" class="tweets-grid flex-wrap overflow-y-auto py-4 scrollbar-inner"
     style="display: flex; margin-left: -16px;">
-    
+
     <div class=""
       style="box-sizing: border-box; background-clip: padding-box; width: 40%; border-width: 0px 0px 0px 16px; border-style: solid; border-color: transparent; border-image: initial;">
       <div data-v-6675b3bd="">
 
-        <div data-v-6675b3bd="" class="shadow-lg flex flex-col bg-block rounded-lg pt-4 space-y-2 mb-4" *ngFor="let tweet of TweetListLeft">
+        <div data-v-6675b3bd="" class="shadow-lg flex flex-col bg-block rounded-lg pt-4 space-y-2 mb-4"
+          *ngFor="let tweet of TweetListLeft">
           <div data-v-6675b3bd="" class="px-4 flex-grow space-y-2">
             <div data-v-6675b3bd="" class="flex justify-between text-muted">
               <div data-v-6675b3bd="" class="flex space-x-2"><img data-v-6675b3bd="" alt="username's profile picture"
@@ -19,13 +20,14 @@
                   data-v-6675b3bd="" href="https://twitter.com/{{tweet.username}}" target="_blank">
                   @{{tweet.username}}
                 </a><span data-v-6675b3bd=""><a data-v-6675b3bd="" target="_blank"
-                  href="https://twitter.com/{{tweet.username}}/status/{{tweet.id}}" class="hover:underline"
-                  style="color: inherit; float: right;">
-                  {{tweet.date}}
-                </a></span>
+                    href="https://twitter.com/{{tweet.username}}/status/{{tweet.id}}" class="hover:underline"
+                    style="color: inherit; float: right;">
+                    {{tweet.date}}
+                  </a></span>
               </div>
             </div>
-            <div data-v-6675b3bd="" dir="auto" class="whitespace-pre-wrap break-words"><span style="white-space: pre-wrap;">{{tweet.data}}</span></div>
+            <div data-v-6675b3bd="" dir="auto" class="whitespace-pre-wrap break-words"><span
+                style="white-space: pre-wrap;">{{tweet.data}}</span></div>
           </div>
           <hr data-v-6675b3bd="">
           <div data-v-6675b3bd="" class="flex justify-between px-4 pb-2">
@@ -45,78 +47,82 @@
                     <path d="M6 6.5V17c0 1.1045695.8954305 2 2 2h4.5"></path>
                   </g>
                 </svg><span data-v-6675b3bd="">{{tweet.retweets}}</span></span>
-                <a target="_blank" href="https://twitter.com/{{tweet.username}}/status/{{tweet.id}}"
-                  style="float: right;">
-                <button data-v-6675b3bd=""
-              class="btn text small primary btn-sm">
-              View On Twitter
-            </button>
-          </a>
-          </div>
+              <a target="_blank" href="https://twitter.com/{{tweet.username}}/status/{{tweet.id}}"
+                style="float: right;">
+                <button data-v-6675b3bd="" class="btn text small primary btn-sm">
+                  View On Twitter
+                </button>
+              </a>
+            </div>
           </div>
         </div>
       </div>
     </div>
     <div class=""
       style="box-sizing: border-box; background-clip: padding-box; width: 40%; border-width: 0px 0px 0px 16px; border-style: solid; border-color: transparent; border-image: initial;">
-    <div data-v-6675b3bd="">
-      <div data-v-6675b3bd="" class="shadow-lg flex flex-col bg-block rounded-lg pt-4 space-y-2 mb-4" *ngFor="let tweet of TweetListRight">
-        <div data-v-6675b3bd="" class="px-4 flex-grow space-y-2">
-          <div data-v-6675b3bd="" class="flex justify-between text-muted">
-            <div data-v-6675b3bd="" class="flex space-x-2"><img data-v-6675b3bd="" alt="users's profile picture"
-                src={{tweet.profile_image_url_https}} class="w-6 h-6 rounded-full overflow-hidden"><a data-v-6675b3bd=""
-                href="https://twitter.com/{{tweet.username}}" target="_blank">
-                @{{tweet.username}}
-              </a><span data-v-6675b3bd=""><a data-v-6675b3bd="" target="_blank"
-                  href="https://twitter.com/{{tweet.username}}/status/{{tweet.id}}" class="hover:underline"
-                  style="color: inherit; float: right;">
-                  {{tweet.date}}
-                </a></span>
+      <div data-v-6675b3bd="">
+        <div data-v-6675b3bd="" class="shadow-lg flex flex-col bg-block rounded-lg pt-4 space-y-2 mb-4"
+          *ngFor="let tweet of TweetListRight">
+          <div data-v-6675b3bd="" class="px-4 flex-grow space-y-2">
+            <div data-v-6675b3bd="" class="flex justify-between text-muted">
+              <div data-v-6675b3bd="" class="flex space-x-2"><img data-v-6675b3bd="" alt="users's profile picture"
+                  src={{tweet.profile_image_url_https}} class="w-6 h-6 rounded-full overflow-hidden"><a
+                  data-v-6675b3bd="" href="https://twitter.com/{{tweet.username}}" target="_blank">
+                  @{{tweet.username}}
+                </a><span data-v-6675b3bd=""><a data-v-6675b3bd="" target="_blank"
+                    href="https://twitter.com/{{tweet.username}}/status/{{tweet.id}}" class="hover:underline"
+                    style="color: inherit; float: right;">
+                    {{tweet.date}}
+                  </a></span>
+              </div>
             </div>
+            <div data-v-6675b3bd="" dir="auto" class="whitespace-pre-wrap break-words"><span
+                style="white-space: pre-wrap;">{{tweet.data}}</span></div>
           </div>
-          <div data-v-6675b3bd="" dir="auto" class="whitespace-pre-wrap break-words"><span
-              style="white-space: pre-wrap;">{{tweet.data}}</span></div>
-        </div>
-        <hr data-v-6675b3bd="">
-        <div data-v-6675b3bd="" class="flex justify-between px-4 pb-2">
-          <div data-v-6675b3bd="" class="flex space-x-2 mb-2 text-sm text-muted"><span data-v-6675b3bd=""
-              class="flex space-x-1 items-center"><svg data-v-6675b3bd="" viewBox="0 0 24 24" height="24" width="24"
-                xmlns="http://www.w3.org/2000/svg" class="p-1">
-                <path xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                  d="M12 21a1 1 0 0 1-.71-.29l-7.77-7.78a5.26 5.26 0 0 1 0-7.4 5.24 5.24 0 0 1 7.4 0L12 6.61l1.08-1.08a5.24 5.24 0 0 1 7.4 0 5.26 5.26 0 0 1 0 7.4l-7.77 7.78A1 1 0 0 1 12 21zM7.22 6a3.2 3.2 0 0 0-2.28.94 3.24 3.24 0 0 0 0 4.57L12 18.58l7.06-7.07a3.24 3.24 0 0 0 0-4.57 3.32 3.32 0 0 0-4.56 0l-1.79 1.8a1 1 0 0 1-1.42 0L9.5 6.94A3.2 3.2 0 0 0 7.22 6z">
-                </path>
-              </svg><span data-v-6675b3bd="">{{tweet.favorites}}</span></span><span data-v-6675b3bd=""
-              class="flex space-x-1 items-center"><svg data-v-6675b3bd="" viewBox="0 0 24 24" height="24" width="24"
-                xmlns="http://www.w3.org/2000/svg" class="p-1">
-                <g xmlns="http://www.w3.org/2000/svg" fill="none" fill-rule="evenodd" stroke-linecap="round"
-                  stroke-linejoin="round" stroke="currentColor" stroke-width="2">
-                  <path d="M15 16l3 3 3-3"></path>
-                  <path d="M18 17.5V7c0-1.1045695-.8954305-2-2-2h-5 0M9 8L6 5 3 8"></path>
-                  <path d="M6 6.5V17c0 1.1045695.8954305 2 2 2h4.5"></path>
-                </g>
-              </svg><span data-v-6675b3bd="">{{tweet.retweets}}</span></span>
+          <hr data-v-6675b3bd="">
+          <div data-v-6675b3bd="" class="flex justify-between px-4 pb-2">
+            <div data-v-6675b3bd="" class="flex space-x-2 mb-2 text-sm text-muted"><span data-v-6675b3bd=""
+                class="flex space-x-1 items-center"><svg data-v-6675b3bd="" viewBox="0 0 24 24" height="24" width="24"
+                  xmlns="http://www.w3.org/2000/svg" class="p-1">
+                  <path xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                    d="M12 21a1 1 0 0 1-.71-.29l-7.77-7.78a5.26 5.26 0 0 1 0-7.4 5.24 5.24 0 0 1 7.4 0L12 6.61l1.08-1.08a5.24 5.24 0 0 1 7.4 0 5.26 5.26 0 0 1 0 7.4l-7.77 7.78A1 1 0 0 1 12 21zM7.22 6a3.2 3.2 0 0 0-2.28.94 3.24 3.24 0 0 0 0 4.57L12 18.58l7.06-7.07a3.24 3.24 0 0 0 0-4.57 3.32 3.32 0 0 0-4.56 0l-1.79 1.8a1 1 0 0 1-1.42 0L9.5 6.94A3.2 3.2 0 0 0 7.22 6z">
+                  </path>
+                </svg><span data-v-6675b3bd="">{{tweet.favorites}}</span></span><span data-v-6675b3bd=""
+                class="flex space-x-1 items-center"><svg data-v-6675b3bd="" viewBox="0 0 24 24" height="24" width="24"
+                  xmlns="http://www.w3.org/2000/svg" class="p-1">
+                  <g xmlns="http://www.w3.org/2000/svg" fill="none" fill-rule="evenodd" stroke-linecap="round"
+                    stroke-linejoin="round" stroke="currentColor" stroke-width="2">
+                    <path d="M15 16l3 3 3-3"></path>
+                    <path d="M18 17.5V7c0-1.1045695-.8954305-2-2-2h-5 0M9 8L6 5 3 8"></path>
+                    <path d="M6 6.5V17c0 1.1045695.8954305 2 2 2h4.5"></path>
+                  </g>
+                </svg><span data-v-6675b3bd="">{{tweet.retweets}}</span></span>
               <a target="_blank" href="https://twitter.com/{{tweet.username}}/status/{{tweet.id}}"
                 style="float: right; padding-bottom: 5%">
-              <button data-v-6675b3bd=""
-            class="btn text small primary btn-sm" >
-            View On Twitter
-          </button>
-          </a>
+                <button data-v-6675b3bd="" class="btn text small primary btn-sm">
+                  View On Twitter
+                </button>
+              </a>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <div data-v-6675b3bd="" id="current_date" class="shadow-lg flex flex-col bg-block rounded-lg flex space-x-2"
-    style="float:right; width: 20%; box-sizing: border-box; border-width: 0px 0px 0px 16px;">
-    <textarea #TweetText class="flex form-control input-sm" rows="5" columns="50"
-      style="resize: none; width:100%; height:auto; background-color: transparent; color:lightgray;"></textarea>
-    <input #ScheduledDate id="dateSelector" type="datetime-local" value="getDate()" min="getDate()" max="2022-12-31T00:00">
-    <!-- <script>
-      document.getElementById("dateSelector").v = "2015-01-02T11:42:13.510";
-    </script> -->
-    <button class="btn text small primary btn-sm" style="float: right; width: 30%"
-      (click)="scheduleTweet(TweetText.value, '369867339', ScheduledDate.value)">Submit</button>
+    <div data-v-6675b3bd="" id="current_date" class="shadow-lg flex flex-col bg-block rounded-lg flex space-x-2"
+      style="float:right; width: 20%; box-sizing: border-box; border-width: 0px 0px 0px 16px;">
+      <div contenteditable="true" id="tweet_boxes">
+        <textarea #TweetText [ngModel]="tweetText[0]" (ngModelChange)="modelChangeFn($event)" class="flex form-control input-sm" rows="5" columns="50"
+       style="resize: none; width:100%; height:auto; background-color: transparent; color:lightgray;"></textarea>
+       <label id="charcount" [ngModel]="tweetchars" type="text">0/280</label>
+      </div>
+      <!-- <script>
+     document.getElementById("dateSelector").v = "2015-01-02T11:42:13.510";
+   </script> -->
+      <input #ScheduledDate id="dateSelector" type="datetime-local" value="getDate()" min="getDate()"
+        max="2022-12-31T00:00">
+      <button class="btn text small primary btn-sm" style="float: right; width: 10%" (click)="addTextArea()">+</button>
+      <button class="btn text small primary btn-sm" style="float: right; width: 20%"
+        (click)="scheduleTweet(TweetText.value, '369867339', ScheduledDate.value)">Submit</button>
 
+    </div>
   </div>
-</div>
