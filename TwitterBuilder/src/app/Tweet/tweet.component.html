@@ -110,19 +110,18 @@
     </div>
     <div data-v-6675b3bd="" id="current_date" class="shadow-lg flex flex-col bg-block rounded-lg flex space-x-2"
       style="float:right; width: 20%; box-sizing: border-box; border-width: 0px 0px 0px 16px;">
-      <div contenteditable="true" id="tweet_boxes">
-        <textarea #TweetText [ngModel]="tweetText[0]" (ngModelChange)="modelChangeFn($event)" class="flex form-control input-sm" rows="5" columns="50"
-       style="resize: none; width:100%; height:auto; background-color: transparent; color:lightgray;"></textarea>
-       <label id="charcount" [ngModel]="tweetchars" type="text">0/280</label>
-      </div>
-      <!-- <script>
-     document.getElementById("dateSelector").v = "2015-01-02T11:42:13.510";
-   </script> -->
+      <ng-container #tweetBoxesTemplate >
+        <div *ngFor="let tweetTextBox of tweetText; let i = index">
+          <textarea #tweetTextArea [ngModel]="tweetText[i]" (ngModelChange)="modelChangeFn($event, i)" class="flex form-control input-sm" rows="5" columns="50"
+        style="resize: none; width:100%; height:auto; background-color: transparent; color:lightgray;"></textarea>
+        <label #charCountLabel id="charcount{{i}}" [ngModel]="tweetchars[i]" type="text" >0/280</label>
+        </div>
+      </ng-container>
       <input #ScheduledDate id="dateSelector" type="datetime-local" value="getDate()" min="getDate()"
         max="2022-12-31T00:00">
-      <button class="btn text small primary btn-sm" style="float: right; width: 10%" (click)="addTextArea()">+</button>
+      <button class="btn text small primary btn-sm" style="float: right; width: 10%" [ngModel]=buttonClicked (click)="addTextArea()">+</button>
       <button class="btn text small primary btn-sm" style="float: right; width: 20%"
-        (click)="scheduleTweet(TweetText.value, '369867339', ScheduledDate.value)">Submit</button>
+        (click)="scheduleTweet('369867339', ScheduledDate.value)">Submit</button>
 
     </div>
   </div>

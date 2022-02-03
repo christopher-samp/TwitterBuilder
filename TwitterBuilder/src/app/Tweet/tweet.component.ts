@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, ElementRef, QueryList, ViewChildren, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { TweetsApiService } from './Tweet-api.service';
 import { Tweet } from './Tweet.model';
@@ -8,6 +8,9 @@ import { ScheduledTweet } from './ScheduledTweet.model';
 @Component({
   templateUrl: './tweet.component.html'
 })
+  
+
+  
 export class TweetsComponent implements OnInit, OnDestroy {
   title = 'TwitterBuilder';
   TweetListSubs: Subscription = new Subscription();
@@ -16,7 +19,10 @@ export class TweetsComponent implements OnInit, OnDestroy {
   tweet: ScheduledTweet;
   tweets: any[] = [];
   tweetText: string[] = [""];
-  tweetchars: number = 0;
+  tweetchars: number[] = [0];
+  buttonClicked: boolean = true;
+
+  @ViewChildren("tweetTextArea,charCountLabel") private children: QueryList<ElementRef>;
 
 
   constructor(private tweetsApi: TweetsApiService, private route: ActivatedRoute) {
@@ -43,16 +49,22 @@ export class TweetsComponent implements OnInit, OnDestroy {
         );
       }
     })
+
+    // this._viewContainer.createEmbeddedView(this.tweetBoxesTemplate)
+
   }
 
-  scheduleTweet(status: string, userid: string, date: string) {
-    this.tweet = new ScheduledTweet(status, date, userid, "Single", 1);
-    this.tweets.push(this.tweet);
-    var jsonTweets = JSON.stringify(this.tweets);
-    console.log(jsonTweets);
-    this.tweetsApi.scheduleTweet(jsonTweets).subscribe();
+  scheduleTweet(userid: string, date: string) {
+    for (let i = 0; i < this.children.length; i = i + 2) {
+      console.log(this.children.get(i)!.nativeElement.value);
+    }
+    // this.tweet = new ScheduledTweet(this.tweetText[0], date, userid, "Single", 1);
+    // this.tweets.push(this.tweet);
+    // var jsonTweets = JSON.stringify(this.tweets);
+    // console.log(jsonTweets);
+    // this.tweetsApi.scheduleTweet(jsonTweets).subscribe();
 
-    this.tweets = [] as ScheduledTweet[]
+    // this.tweets = [] as ScheduledTweet[]
   }
 
   getDate() {
@@ -69,26 +81,15 @@ export class TweetsComponent implements OnInit, OnDestroy {
   }
 
   addTextArea() {
-    console.log("here");
-    var div = document.getElementById('tweet_boxes');
-    if (div) {
-      console.log(div.innerHTML)
-      div.innerHTML += "<textarea #TweetText2 [ngModel]='tweetText[1]' (ngModelChange)='modelChangeFn2($event)' class='flex form - control input - sm' rows='5' columns='50' style = 'resize: none; width:100%; height:auto; background-color: transparent; color:lightgray;' > </textarea>";
-      console.log(div.innerHTML)
-      // this.tweetText.push("abc");
-      console.log(this.tweetText)
-    }
+    console.log("aqui")
+    this.tweetText.push("");
+    this.tweetchars.push(0);
   }
 
-  modelChangeFn(value: string) {
+  modelChangeFn(value: string, index: number) {
     console.log("modelChangeFn")
-    this.tweetText[0] = value;
-    console.log(this.tweetText[0]);
-    this.tweetchars = this.tweetText[0].length;
-    var charCountLabel = document.getElementById('charcount')
-    if (charCountLabel) {
-      charCountLabel.innerHTML = this.tweetchars + "/280";
-    }
+    this.children.get((index * 2))!.nativeElement.value = value;
+    this.children.get((index * 2) + 1)!.nativeElement.innerHTML = value.length + "/280";
   }
 
 
