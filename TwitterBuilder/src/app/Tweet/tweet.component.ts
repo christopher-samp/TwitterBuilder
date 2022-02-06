@@ -16,7 +16,6 @@ export class TweetsComponent implements OnInit, OnDestroy {
   TweetListSubs: Subscription = new Subscription();
   TweetListLeft: Tweet[];
   TweetListRight: Tweet[];
-  tweet: ScheduledTweet;
   tweets: any[] = [];
   tweetText: string[] = [""];
   tweetchars: number[] = [0];
@@ -55,16 +54,45 @@ export class TweetsComponent implements OnInit, OnDestroy {
   }
 
   scheduleTweet(userid: string, date: string) {
-    for (let i = 0; i < this.children.length; i = i + 2) {
-      console.log(this.children.get(i)!.nativeElement.value);
+    var isThread = "";
+    if (this.children.length > 2) {
+      isThread = "Thread";
     }
-    // this.tweet = new ScheduledTweet(this.tweetText[0], date, userid, "Single", 1);
-    // this.tweets.push(this.tweet);
-    // var jsonTweets = JSON.stringify(this.tweets);
-    // console.log(jsonTweets);
-    // this.tweetsApi.scheduleTweet(jsonTweets).subscribe();
+    else {
+      isThread = "Single";
+    }
 
-    // this.tweets = [] as ScheduledTweet[]
+    var tweetNumber = 1;
+    var tweetText = "";
+    for (let i = 0; i < this.children.length; i = i + 2) {
+      tweetText = this.children.get(i)!.nativeElement.value;
+      if (tweetText.length > 280) {
+        this.tweets = [] as ScheduledTweet[];
+        alert("Ensure Tweets Are Under 280 Character limit!");
+        return;
+      }
+      this.tweets.push(new ScheduledTweet(tweetText, date, userid, isThread, tweetNumber));
+      tweetNumber++;
+    }
+    
+    var jsonTweets = JSON.stringify(this.tweets);
+    console.log(jsonTweets);
+    this.tweetsApi.scheduleTweet(jsonTweets).subscribe(res => {
+      if (res == 200) {
+        this.tweets = [] as ScheduledTweet[]
+        this.tweetText = [""] as string[];
+        this.tweetchars = [0] as number[];
+        this.children.get(0)!.nativeElement.value = "";
+        this.children.get(1)!.nativeElement.innerHTML = "0/280";
+        alert("Tweet Scheduled!");
+      }
+      else {
+        this.tweets = [] as ScheduledTweet[]
+        alert("Tweet Failed To Scheudule.")
+      }
+    });
+
+    
   }
 
   getDate() {

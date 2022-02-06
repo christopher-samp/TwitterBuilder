@@ -430,15 +430,13 @@ def sendTweet(tweets):
     auth.set_access_token(access_token, access_token_secret)
 
     api = tweepy.API(auth)
-    lastUserId='default'
+    
     for tweet in tweets:
-        if(tweet['threadorderid'] != 1 and tweet['userid'] == lastUserId):
+        if(tweet['threadorderid'] != 1):
             newReplyTweet = api.update_status(status=tweet['tweetcontent'], in_reply_to_status_id=newReplyTweet['id_str'])._json
         else:
             newReplyTweet = api.update_status(status=tweet['tweetcontent'])._json
-
-        lastUserId = tweet['userid']
-
+        print(newReplyTweet['id_str'])
 
 @app.route('/ScheduleTweet')
 def ScheduleTweet():
@@ -446,9 +444,9 @@ def ScheduleTweet():
     print("Tweet JSON: "+tweets)
     tweetObjects = json.loads(tweets)
     returnValue = UserSql.InsertIntoScheduledTweets(tweetObjects)
-    return jsonify(success=True)
+    return jsonify(success="200")
 
-#scheduler.start()
+scheduler.start()
 
 
 
