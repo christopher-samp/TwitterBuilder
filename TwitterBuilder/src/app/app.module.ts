@@ -12,6 +12,7 @@ import { TweetsComponent } from './Tweet/tweet.component';
 import { UsersComponent } from './User/user.component';
 import { SearchComponent } from './search/search.component';
 import { EngageComponent } from './engage/engage.component';
+import { CalendarComponent } from './calendar/calendar.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { EngageComponent } from './engage/engage.component';
     TweetsComponent,
     UsersComponent,
     SearchComponent,
-    EngageComponent
+    EngageComponent,
+    CalendarComponent
   ],
   imports: [
     BrowserModule,
