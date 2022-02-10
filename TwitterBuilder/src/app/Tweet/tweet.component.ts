@@ -78,8 +78,8 @@ export class TweetsComponent implements OnInit, OnDestroy {
     var jsonTweets = JSON.stringify(this.tweets);
     console.log(jsonTweets);
     this.tweetsApi.scheduleTweet(jsonTweets).subscribe(res => {
+      this.tweets = [] as ScheduledTweet[]
       if (res == 200) {
-        this.tweets = [] as ScheduledTweet[]
         this.tweetText = [""] as string[];
         this.tweetchars = [0] as number[];
         this.children.get(0)!.nativeElement.value = "";
@@ -87,12 +87,9 @@ export class TweetsComponent implements OnInit, OnDestroy {
         alert("Tweet Scheduled!");
       }
       else {
-        this.tweets = [] as ScheduledTweet[]
         alert("Tweet Failed To Scheudule.")
       }
     });
-
-    
   }
 
   getDate() {
