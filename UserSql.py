@@ -39,6 +39,19 @@ def GetWatchListConnections(userId):
   
   return myCursor.fetchall()
 
+def GetScheduledTweets(userId):
+  db = mysql.connector.connect(
+    host="localhost",
+    user="root",
+    password="P@ssw0rd@1",
+    database="testdatabase"
+  )
+
+  myCursor = db.cursor()
+  myCursor.execute("SELECT * FROM testdatabase.ScheduledTweets where UserId = "+userId+" AND sent=0")
+  
+  return myCursor.fetchall()
+
 def InsertIntoScheduledTweets(tweets):
   #tweets is a list of tweets
   db = mysql.connector.connect(

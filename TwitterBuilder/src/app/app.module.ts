@@ -13,6 +13,8 @@ import { UsersComponent } from './User/user.component';
 import { SearchComponent } from './search/search.component';
 import { EngageComponent } from './engage/engage.component';
 import { CalendarComponent } from './calendar/calendar.component';
+import { CalendarApiService } from './calendar/calendar-api.service';
+
 
 @NgModule({
   declarations: [
@@ -29,7 +31,7 @@ import { CalendarComponent } from './calendar/calendar.component';
     HttpClientModule,
     FormsModule
   ],
-  providers: [TweetsApiService, UsersApiService, EngageApiService],
-  bootstrap: [AppComponent, TweetsComponent, UsersComponent]
+  providers: [TweetsApiService, UsersApiService, EngageApiService, CalendarApiService],
+  bootstrap: [AppComponent, TweetsComponent, UsersComponent, CalendarComponent]
 })
 export class AppModule { }

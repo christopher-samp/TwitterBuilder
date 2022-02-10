@@ -1,1 +1,25 @@
 <p>calendar works!</p>
+<div data-v-6675b3bd="" class="relative">
+  <div data-v-6675b3bd="" class="categories-shadow top -mb-8"></div>
+  <div data-v-6675b3bd="" class="categories-shadow bottom"></div>
+  <div data-v-6675b3bd="" class="tweets-grid flex-wrap overflow-y-auto py-4 scrollbar-inner"
+    style="display: flex; margin-left: -16px;">
+
+    <div class=""
+      style="box-sizing: border-box; background-clip: padding-box; width: 100%; border-width: 0px 0px 0px 16px; border-style: solid; border-color: transparent; border-image: initial;"
+      *ngFor="let tweet of scheduledTweets; let i = index">
+      <div data-v-6675b3bd="">
+
+
+        <div data-v-6675b3bd="" class="shadow-lg flex flex-col bg-block rounded-lg pt-4 space-y-2 mb-4"
+          style="width:100%; float:left;">
+          <div data-v-6675b3bd="" class="px-4 flex-grow space-y-2">
+            <div data-v-6675b3bd="" class="flex justify-between text-muted" style="width:70%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                {{tweet.tweetContent}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

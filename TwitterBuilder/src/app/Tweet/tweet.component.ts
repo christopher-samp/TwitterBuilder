@@ -71,7 +71,7 @@ export class TweetsComponent implements OnInit, OnDestroy {
         alert("Ensure Tweets Are Under 280 Character limit!");
         return;
       }
-      this.tweets.push(new ScheduledTweet(tweetText, date, userid, isThread, tweetNumber));
+      this.tweets.push(new ScheduledTweet(tweetText, date, "", userid, isThread, tweetNumber, 0, 0, "1"));
       tweetNumber++;
     }
     

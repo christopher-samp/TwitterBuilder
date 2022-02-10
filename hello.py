@@ -446,6 +446,28 @@ def ScheduleTweet():
     returnValue = UserSql.InsertIntoScheduledTweets(tweetObjects)
     return jsonify(success="200")
 
+@app.route('/GetScheduledTweets')
+def GetScheduledTweets():
+    userId = request.args.get('userId', None)
+
+    scheduledTweets = UserSql.GetScheduledTweets(userId)
+    tweetList = []
+    for tweet in scheduledTweets:
+        tweetObject = {
+        "id" : tweet[0],
+        "userId" : tweet[1],
+        "tweetContent" : tweet[2],
+        "timeToSend" : tweet[3],
+        "sent" : tweet[4],
+        "timeSent" : tweet[5],
+        "done" : tweet[6],
+        "tweetType" : tweet[7],
+        "threadOrderId" : tweet[8]
+        }
+
+    tweetList.append(tweetObject)
+    return jsonify(tweetList)
+
 scheduler.start()
 
 
